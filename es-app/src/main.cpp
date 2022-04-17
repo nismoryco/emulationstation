@@ -13,7 +13,6 @@
 #include "MameNames.h"
 #include "platform.h"
 #include "PowerSaver.h"
-#include "ScraperCmdLine.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
@@ -27,8 +26,6 @@
 #endif
 
 #include <FreeImage.h>
-
-bool scrape_cmdline = false;
 
 bool parseArgs(int argc, char* argv[])
 {
@@ -139,9 +136,6 @@ bool parseArgs(int argc, char* argv[])
 			bool vsync = (strcmp(argv[i + 1], "on") == 0 || strcmp(argv[i + 1], "1") == 0) ? true : false;
 			Settings::getInstance()->setBool("VSync", vsync);
 			i++; // skip vsync value
-		}else if(strcmp(argv[i], "--scrape") == 0)
-		{
-			scrape_cmdline = true;
 		}else if(strcmp(argv[i], "--max-vram") == 0)
 		{
 			int maxVRAM = atoi(argv[i + 1]);
@@ -186,7 +180,6 @@ bool parseArgs(int argc, char* argv[])
 				"--no-confirm-quit              omit confirm dialog on actions of quit menu\n"
 				"--no-splash                    don't show the splash screen\n"
 				"--debug                        more logging, show console on Windows\n"
-				"--scrape                       scrape using command line interface\n"
 				"--windowed                     not fullscreen, should be used with --resolution\n"
 				"--vsync [1/on or 0/off]        turn vsync on or off (default is on)\n"
 				"--max-vram [size]              max VRAM to use in MB before swapping. 0 for unlimited\n"
@@ -322,21 +315,18 @@ int main(int argc, char* argv[])
 	bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
 	bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
 
-	if(!scrape_cmdline)
+	if(!window.init())
 	{
-		if(!window.init())
-		{
-			LOG(LogError) << "Window failed to initialize!";
-			return 1;
-		}
+		LOG(LogError) << "Window failed to initialize!";
+		return 1;
+	}
 
-		if (splashScreen)
-		{
-			std::string progressText = "Loading...";
-			if (splashScreenProgress)
-				progressText = "Loading system config...";
-			window.renderLoadingScreen(progressText);
-		}
+	if (splashScreen)
+	{
+		std::string progressText = "Loading...";
+		if (splashScreenProgress)
+			progressText = "Loading system config...";
+		window.renderLoadingScreen(progressText);
 	}
 
 	const char* errorMsg = NULL;
@@ -346,8 +336,7 @@ int main(int argc, char* argv[])
 		if(errorMsg == NULL)
 		{
 			LOG(LogError) << "Unknown error occured while parsing system config file.";
-			if(!scrape_cmdline)
-				Renderer::deinit();
+			Renderer::deinit();
 			return 1;
 		}
 
@@ -359,12 +348,6 @@ int main(int argc, char* argv[])
 				quit->type = SDL_QUIT;
 				SDL_PushEvent(quit);
 			}));
-	}
-
-	//run the command line scraper then quit
-	if(scrape_cmdline)
-	{
-		return run_scraper_cmdline();
 	}
 
 	// preload what we can right away instead of waiting for the user to select it

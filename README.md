@@ -121,7 +121,6 @@ You can use `--help` or `-h` to view a list of command-line options. Briefly out
 --no-exit                       don't show the exit option in the menu
 --no-splash                     don't show the splash screen
 --debug                         more logging, show console on Windows
---scrape                        scrape using command line interface
 --windowed                      not fullscreen, should be used with --resolution
 --vsync [1/on or 0/off]         turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use in Mb before swapping. 0 for unlimited
@@ -204,15 +203,6 @@ gamelist.xml
 The gamelist.xml file for a system defines metadata for games, such as a name, image (like a screenshot or box art), description, release date, and rating.
 
 If at least one game in a system has an image specified, ES will use the detailed view for that system (which displays metadata alongside the game list).
-
-*You can use ES's [scraping](http://en.wikipedia.org/wiki/Web_scraping) tools to avoid creating a gamelist.xml by hand.*  There are two ways to run the scraper:
-
-* **If you want to scrape multiple games:** press start to open the menu and choose the "SCRAPER" option.  Adjust your settings and press "SCRAPE NOW".
-* **If you just want to scrape one game:** find the game on the game list in ES and press select.  Choose "EDIT THIS GAME'S METADATA" and then press the "SCRAPE" button at the bottom of the metadata editor.
-
-You can also edit metadata within ES by using the metadata editor - just find the game you wish to edit on the gamelist, press Select, and choose "EDIT THIS GAME'S METADATA."
-
-A command-line version of the scraper is also provided - just run emulationstation with `--scrape` *(currently broken)*.
 
 The switch `--ignore-gamelist` can be used to ignore the gamelist and force ES to use the non-detailed view.
 

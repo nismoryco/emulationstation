@@ -74,7 +74,6 @@ void Settings::setDefaults()
 	mBoolMap["EnableSounds"] = true;
 	mBoolMap["ShowHelpPrompts"] = true;
 	mBoolMap["DoublePressRemovesFromFavs"] = false;
-	mBoolMap["ScrapeRatings"] = true;
 	mBoolMap["IgnoreGamelist"] = false;
 	mBoolMap["HideConsole"] = true;
 	mBoolMap["QuickSystemSelect"] = true;
@@ -90,8 +89,6 @@ void Settings::setDefaults()
 	mIntMap["ScreenSaverTime"] = 5 * Settings::ONE_MINUTE_IN_MS;
 	mIntMap["SystemSleepTime"] = 0 * Settings::ONE_MINUTE_IN_MS;
 	mBoolMap["SystemSleepTimeHintDisplayed"] = false;
-	mIntMap["ScraperResizeWidth"] = 400;
-	mIntMap["ScraperResizeHeight"] = 0;
 	#ifdef _RPI_
 		mIntMap["MaxVRAM"] = 80;
 	#else
@@ -101,7 +98,6 @@ void Settings::setDefaults()
 	mStringMap["TransitionStyle"] = "fade";
 	mStringMap["ThemeSet"] = "";
 	mStringMap["ScreenSaverBehavior"] = "dim";
-	mStringMap["Scraper"] = "TheGamesDB";
 	mStringMap["GamelistViewStyle"] = "automatic";
 	mStringMap["SaveGamelistsMode"] = "on exit";
 

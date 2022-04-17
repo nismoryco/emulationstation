@@ -1,14 +1,12 @@
 #include "GuiGamelistOptions.h"
 
 #include "guis/GuiGamelistFilter.h"
-#include "scrapers/Scraper.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
-#include "GuiMetaDataEd.h"
 #include "SystemData.h"
 
 GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : GuiComponent(window),
@@ -107,15 +105,6 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		mMenu.addRow(row);
 	}
 
-	if (UIModeController::getInstance()->isUIModeFull() && !fromPlaceholder && !(mSystem->isCollection() && file->getType() == FOLDER))
-	{
-		row.elements.clear();
-		row.addElement(std::make_shared<TextComponent>(mWindow, "EDIT THIS GAME'S METADATA", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-		row.addElement(makeArrow(mWindow), false);
-		row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
-		mMenu.addRow(row);
-	}
-
 	// center the menu
 	setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
 	mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2, (mSize.y() - mMenu.getSize().y()) / 2);
@@ -173,33 +162,6 @@ void GuiGamelistOptions::exitEditMode()
 {
 	CollectionSystemManager::get()->exitEditMode();
 	delete this;
-}
-
-void GuiGamelistOptions::openMetaDataEd()
-{
-	// open metadata editor
-	// get the FileData that hosts the original metadata
-	FileData* file = getGamelist()->getCursor()->getSourceFileData();
-	ScraperSearchParams p;
-	p.game = file;
-	p.system = file->getSystem();
-
-	std::function<void()> deleteBtnFunc;
-
-	if (file->getType() == FOLDER)
-	{
-		deleteBtnFunc = NULL;
-	}
-	else
-	{
-		deleteBtnFunc = [this, file] {
-			CollectionSystemManager::get()->deleteCollectionFiles(file);
-			ViewController::get()->getGameListView(file->getSystem()).get()->remove(file, true);
-		};
-	}
-
-	mWindow->pushGui(new GuiMetaDataEd(mWindow, &file->metadata, file->metadata.getMDD(), p, Utils::FileSystem::getFileName(file->getPath()),
-		std::bind(&IGameListView::onFileChanged, ViewController::get()->getGameListView(file->getSystem()).get(), file, FILE_METADATA_CHANGED), deleteBtnFunc));
 }
 
 void GuiGamelistOptions::jumpToLetter()

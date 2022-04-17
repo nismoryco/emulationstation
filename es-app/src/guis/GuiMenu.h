@@ -24,7 +24,6 @@ private:
 	void openConfigInput();
 	void openOtherSettings();
 	void openQuitMenu();
-	void openScraperSettings();
 	void openScreensaverOptions();
 	void openSoundSettings();
 	void openUISettings();

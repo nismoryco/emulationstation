@@ -5,42 +5,42 @@
 #include <pugixml/src/pugixml.hpp>
 
 MetaDataDecl gameDecls[] = {
-	// key,         type,                   default,            statistic,  name in GuiMetaDataEd,  prompt in GuiMetaDataEd
-	{"name",        MD_STRING,              "",                 false,      "name",                 "enter game name"},
-	{"sortname",    MD_STRING,              "",                 false,      "sortname",             "enter game sort name"},
-	{"desc",        MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description"},
-	{"image",       MD_PATH,                "",                 false,      "image",                "enter path to image"},
-	{"video",       MD_PATH     ,           "",                 false,      "video",                "enter path to video"},
-	{"marquee",     MD_PATH,                "",                 false,      "marquee",              "enter path to marquee"},
-	{"thumbnail",   MD_PATH,                "",                 false,      "thumbnail",            "enter path to thumbnail"},
-	{"rating",      MD_RATING,              "0.000000",         false,      "rating",               "enter rating"},
-	{"releasedate", MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date"},
-	{"developer",   MD_STRING,              "unknown",          false,      "developer",            "enter game developer"},
-	{"publisher",   MD_STRING,              "unknown",          false,      "publisher",            "enter game publisher"},
-	{"genre",       MD_STRING,              "unknown",          false,      "genre",                "enter game genre"},
-	{"players",     MD_INT,                 "1",                false,      "players",              "enter number of players"},
-	{"favorite",    MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on"},
-	{"hidden",      MD_BOOL,                "false",            false,      "hidden",               "enter hidden off/on" },
-	{"kidgame",     MD_BOOL,                "false",            false,      "kidgame",              "enter kidgame off/on" },
-	{"playcount",   MD_INT,                 "0",                true,       "play count",           "enter number of times played"},
-	{"lastplayed",  MD_TIME,                "0",                true,       "last played",          "enter last played date"}
+	// key,         type,                   default
+	{"name",        MD_STRING,              ""},
+	{"sortname",    MD_STRING,              ""},
+	{"desc",        MD_MULTILINE_STRING,    ""},
+	{"image",       MD_PATH,                ""},
+	{"video",       MD_PATH     ,           ""},
+	{"marquee",     MD_PATH,                ""},
+	{"thumbnail",   MD_PATH,                ""},
+	{"rating",      MD_RATING,              "0.000000"},
+	{"releasedate", MD_DATE,                "not-a-date-time"},
+	{"developer",   MD_STRING,              "unknown"},
+	{"publisher",   MD_STRING,              "unknown"},
+	{"genre",       MD_STRING,              "unknown"},
+	{"players",     MD_INT,                 "1"},
+	{"favorite",    MD_BOOL,                "false"},
+	{"hidden",      MD_BOOL,                "false"},
+	{"kidgame",     MD_BOOL,                "false"},
+	{"playcount",   MD_INT,                 "0"},
+	{"lastplayed",  MD_TIME,                "0"}
 };
 const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
 
 MetaDataDecl folderDecls[] = {
-	{"name",        MD_STRING,              "",                 false,      "name",                 "enter game name"},
-	{"sortname",    MD_STRING,              "",                 false,      "sortname",             "enter game sort name"},
-	{"desc",        MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description"},
-	{"image",       MD_PATH,                "",                 false,      "image",                "enter path to image"},
-	{"thumbnail",   MD_PATH,                "",                 false,      "thumbnail",            "enter path to thumbnail"},
-	{"video",       MD_PATH,                "",                 false,      "video",                "enter path to video"},
-	{"marquee",     MD_PATH,                "",                 false,      "marquee",              "enter path to marquee"},
-	{"rating",      MD_RATING,              "0.000000",         false,      "rating",               "enter rating"},
-	{"releasedate", MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date"},
-	{"developer",   MD_STRING,              "unknown",          false,      "developer",            "enter game developer"},
-	{"publisher",   MD_STRING,              "unknown",          false,      "publisher",            "enter game publisher"},
-	{"genre",       MD_STRING,              "unknown",          false,      "genre",                "enter game genre"},
-	{"players",     MD_INT,                 "1",                false,      "players",              "enter number of players"}
+	{"name",        MD_STRING,              ""},
+	{"sortname",    MD_STRING,              ""},
+	{"desc",        MD_MULTILINE_STRING,    ""},
+	{"image",       MD_PATH,                ""},
+	{"thumbnail",   MD_PATH,                ""},
+	{"video",       MD_PATH,                ""},
+	{"marquee",     MD_PATH,                ""},
+	{"rating",      MD_RATING,              "0.000000"},
+	{"releasedate", MD_DATE,                "not-a-date-time"},
+	{"developer",   MD_STRING,              "unknown"},
+	{"publisher",   MD_STRING,              "unknown"},
+	{"genre",       MD_STRING,              "unknown"},
+	{"players",     MD_INT,                 "1"}
 };
 const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls + sizeof(folderDecls) / sizeof(folderDecls[0]));
 
