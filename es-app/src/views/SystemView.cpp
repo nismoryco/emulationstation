@@ -613,7 +613,7 @@ void  SystemView::getDefaultElements(void)
 	mCarousel.logoRotationOrigin.y() = 0.5;
 	mCarousel.logoSize.x() = 0.25f * mSize.x();
 	mCarousel.logoSize.y() = 0.155f * mSize.y();
-	mCarousel.maxLogoCount = 3;
+	mCarousel.maxLogoCount = 1;
 	mCarousel.zIndex = 40;
 
 	// System Info Bar
