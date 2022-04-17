@@ -3,7 +3,6 @@
 #include "renderers/Renderer.h"
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
-#include "PowerSaver.h"
 #include "Settings.h"
 #include <vlc/vlc.h>
 #include <SDL_mutex.h>
@@ -299,7 +298,6 @@ void VideoVlcComponent::startVideo()
 							}
 						}
 					}
-					PowerSaver::pause();
 					setupContext();
 
 					// Setup the media player
@@ -336,6 +334,5 @@ void VideoVlcComponent::stopVideo()
 		libvlc_media_release(mMedia);
 		mMediaPlayer = NULL;
 		freeContext();
-		PowerSaver::resume();
 	}
 }

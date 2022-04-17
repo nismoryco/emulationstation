@@ -18,7 +18,6 @@ GuiSlideshowScreensaverOptions::GuiSlideshowScreensaverOptions(Window* window, c
 	addSaveFunc([sss_media_sec] {
 		int playNextTimeout = (int)Math::round(sss_media_sec->getValue()) * (1000);
 		Settings::getInstance()->setInt("ScreenSaverSwapMediaTimeout", playNextTimeout);
-		PowerSaver::updateTimeouts();
 	});
 
 	// stretch

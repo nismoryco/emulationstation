@@ -15,7 +15,6 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 	addSaveFunc([swap] {
 		int playNextTimeout = (int)Math::round(swap->getValue()) * (1000);
 		Settings::getInstance()->setInt("ScreenSaverSwapVideoTimeout", playNextTimeout);
-		PowerSaver::updateTimeouts();
 	});
 
 	auto stretch_screensaver = std::make_shared<SwitchComponent>(mWindow);

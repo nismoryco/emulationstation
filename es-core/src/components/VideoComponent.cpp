@@ -2,7 +2,6 @@
 
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
-#include "PowerSaver.h"
 #include "ThemeData.h"
 #include "Window.h"
 #include <SDL_timer.h>
@@ -246,7 +245,7 @@ void VideoComponent::startVideoWithDelay()
 		// Set the video that we are going to be playing so we don't attempt to restart it
 		mPlayingVideoPath = mVideoPath;
 
-		if (mConfig.startDelay == 0 || PowerSaver::getMode() == PowerSaver::INSTANT)
+		if (mConfig.startDelay == 0)
 		{
 			// No delay. Just start the video
 			mStartDelayed = false;

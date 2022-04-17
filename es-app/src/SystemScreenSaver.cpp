@@ -11,7 +11,6 @@
 #include "FileData.h"
 #include "FileFilterIndex.h"
 #include "Log.h"
-#include "PowerSaver.h"
 #include "Scripting.h"
 #include "Sound.h"
 #include "SystemData.h"
@@ -89,7 +88,6 @@ void SystemScreenSaver::setVideoScreensaver(std::string& path)
 	mVideoScreensaver->setVideo(path);
 	mVideoScreensaver->setScreensaverMode(true);
 	mVideoScreensaver->onShow();
-	PowerSaver::runningScreenSaver(true);
 	mTimer = 0;
 	return;
 }
@@ -140,9 +138,7 @@ void SystemScreenSaver::startScreenSaver()
 	if (!mVideoScreensaver && (screensaver_behavior == "random video"))
 	{
 		// Configure to fade out the windows, Skip Fading if Instant mode
-		mState =  PowerSaver::getMode() == PowerSaver::INSTANT
-					? STATE_SCREENSAVER_ACTIVE
-					: STATE_FADE_OUT_WINDOW;
+		mState = STATE_FADE_OUT_WINDOW;
 		mSwapTimeout = Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout");
 		mOpacity = 0.0f;
 
@@ -170,9 +166,7 @@ void SystemScreenSaver::startScreenSaver()
 	else if (screensaver_behavior == "slideshow")
 	{
 		// Configure to fade out the windows, Skip Fading if Instant mode
-		mState =  PowerSaver::getMode() == PowerSaver::INSTANT
-					? STATE_SCREENSAVER_ACTIVE
-					: STATE_FADE_OUT_WINDOW;
+		mState =  STATE_FADE_OUT_WINDOW;
 		mSwapTimeout = Settings::getInstance()->getInt("ScreenSaverSwapMediaTimeout");
 		mOpacity = 0.0f;
 
@@ -203,14 +197,11 @@ void SystemScreenSaver::startScreenSaver()
 		{
 			if (Utils::FileSystem::exists(bg_audio_file))
 			{
-				// paused PS so that the background audio keeps playing
-				PowerSaver::pause();
 				mBackgroundAudio = Sound::get(bg_audio_file);
 				mBackgroundAudio->play();
 			}
 		}
 
-		PowerSaver::runningScreenSaver(true);
 		mTimer = 0;
 		if (mCurrentGame != NULL) 
 		{
@@ -229,8 +220,6 @@ void SystemScreenSaver::stopScreenSaver()
 	{
 		mBackgroundAudio->stop();
 		mBackgroundAudio.reset();
-		// if we were playing audio, we paused PS
-		PowerSaver::resume();
 	}
 
 	// so that we stop the background audio next time, unless we're restarting the screensaver
@@ -251,7 +240,6 @@ void SystemScreenSaver::stopScreenSaver()
 
 	// we need this to loop through different videos
 	mState = STATE_INACTIVE;
-	PowerSaver::runningScreenSaver(false);
 }
 
 void SystemScreenSaver::renderScreenSaver()

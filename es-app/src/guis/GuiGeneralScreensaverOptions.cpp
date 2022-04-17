@@ -16,7 +16,6 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 	addWithLabel("SCREENSAVER AFTER", screensaver_time);
 	addSaveFunc([screensaver_time] {
 		Settings::getInstance()->setInt("ScreenSaverTime", (int)Math::round(screensaver_time->getValue()) * Settings::ONE_MINUTE_IN_MS);
-		PowerSaver::updateTimeouts();
 	});
 
 	// Allow ScreenSaver Controls - ScreenSaverControls
@@ -43,7 +42,6 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 				"OK", [] { return; }));
 		}
 		Settings::getInstance()->setString("ScreenSaverBehavior", screensaver_behavior->getSelected());
-		PowerSaver::updateTimeouts();
 	});
 
 	ComponentListRow row;
