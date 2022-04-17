@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 2.8)
 option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer) and audio options" ${RPI})
-option(CEC "Set to ON to enable CEC" ${CEC})
 option(PROFILING "Set to ON to enable profiling" ${PROFILING})
 
 # GLES implementation overrides
@@ -94,11 +93,6 @@ find_package(CURL REQUIRED)
 find_package(VLC REQUIRED)
 find_package(RapidJSON REQUIRED)
 
-#add libCEC support
-if(CEC)
-    find_package(libCEC REQUIRED)
-endif()
-
 #add ALSA for Linux
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_package(ALSA REQUIRED)
@@ -108,10 +102,6 @@ endif()
 #set up compiler flags and excutable names
 if(DEFINED BCMHOST OR RPI)
     add_definitions(-D_RPI_)
-endif()
-
-if(DEFINED libCEC_FOUND)
-    add_definitions(-DHAVE_LIBCEC)
 endif()
 
 if(PROFILING)
@@ -177,13 +167,6 @@ else()
         )
 endif()
 
-#add libCEC_INCLUDE_DIR
-if(DEFINED libCEC_FOUND)
-    LIST(APPEND COMMON_INCLUDE_DIRS
-        ${libCEC_INCLUDE_DIR}
-    )
-endif()
-
 #add ALSA for Linux
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     LIST(APPEND COMMON_INCLUDE_DIRS
@@ -203,19 +186,6 @@ set(COMMON_LIBRARIES
     pugixml
     nanosvg
 )
-
-#add libCEC_LIBRARIES
-if(DEFINED libCEC_FOUND)
-if(DEFINED BCMHOST)
-    LIST(APPEND COMMON_LIBRARIES
-        vchiq_arm
-    )
-endif()
-    LIST(APPEND COMMON_LIBRARIES
-        dl
-        ${libCEC_LIBRARIES}
-    )
-endif()
 
 #add ALSA for Linux
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
