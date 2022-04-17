@@ -20,9 +20,6 @@ FreeImage
 FreeType
 	http://www.freetype.org
 
-cURL
-	http://curl.haxx.se/
-
 nanosvg
 	https://github.com/memononen/nanosvg
 

@@ -11,19 +11,19 @@ Building
 
 EmulationStation uses some C++11 code, which means you'll need to use at least g++-4.7 on Linux, or VS2010 on Windows, to compile.
 
-EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, FreeImage, FreeType, cURL and RapidJSON.  You also should probably install the `fonts-droid` package which contains fallback fonts for Chinese/Japanese/Korean characters, but ES will still work fine without it (this package is only used at run-time).
+EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, FreeImage, FreeType and RapidJSON.  You also should probably install the `fonts-droid` package which contains fallback fonts for Chinese/Japanese/Korean characters, but ES will still work fine without it (this package is only used at run-time).
 
 **On Debian/Ubuntu:**
 All of this be easily installed with `apt-get`:
 ```bash
-sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev rapidjson-dev \
+sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev rapidjson-dev \
   libasound2-dev libgles2-mesa-dev build-essential cmake fonts-droid-fallback libvlc-dev \
   libvlccore-dev vlc-bin
 ```
 **On Fedora:**
 All of this be easily installed with `dnf` (with rpmfusion activated) :
 ```bash
-sudo dnf install SDL2-devel freeimage-devel freetype-devel curl-devel \
+sudo dnf install SDL2-devel freeimage-devel freetype-devel \
   alsa-lib-devel mesa-libGL-devel cmake \
   vlc-devel rapidjson-devel 
 ```
@@ -75,11 +75,9 @@ cmake -DCMAKE_BUILD_TYPE=Debug .
 
 [SDL2](http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip)
 
-[cURL](http://curl.haxx.se/download.html) (you'll need to compile or get the pre-compiled DLL version)
-
 [RapisJSON](https://github.com/tencent/rapidjson) (you'll need the `include/rapidsjon` added to the include path)
 
-(Remember to copy necessary .DLLs into the same folder as the executable: probably FreeImage.dll, freetype6.dll, SDL2.dll, libcurl.dll, and zlib1.dll. Exact list depends on if you built your libraries in "static" mode or not.)
+(Remember to copy necessary .DLLs into the same folder as the executable: probably FreeImage.dll, freetype6.dll, SDL2.dll, and zlib1.dll. Exact list depends on if you built your libraries in "static" mode or not.)
 
 [CMake](http://www.cmake.org/cmake/resources/software.html) (this is used for generating the Visual Studio project)
 
