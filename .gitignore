@@ -15,7 +15,7 @@
 *.d
 
 # Compiled executable
-emulationstation
+emulationstation.bin
 
 # build directory
 build

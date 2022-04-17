@@ -124,8 +124,8 @@ endif()
 #-------------------------------------------------------------------------------
 # define target
 include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
-add_executable(emulationstation ${ES_SOURCES} ${ES_HEADERS})
-target_link_libraries(emulationstation ${COMMON_LIBRARIES} es-core)
+add_executable(emulationstation.bin ${ES_SOURCES} ${ES_HEADERS})
+target_link_libraries(emulationstation.bin ${COMMON_LIBRARIES} es-core)
 
 # special properties for Windows builds
 if(MSVC)
@@ -133,17 +133,17 @@ if(MSVC)
     # when --debug is not set (see es-core/src/main.cpp for explanation).
     # The console will still be shown if launched with --debug.
     # Note that up to CMake 2.8.10 this feature is broken: http://public.kitware.com/Bug/view.php?id=12566
-    set_target_properties(emulationstation PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
-    set_target_properties(emulationstation PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:WINDOWS")
-    set_target_properties(emulationstation PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
-    set_target_properties(emulationstation PROPERTIES LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:WINDOWS")
+    set_target_properties(emulationstation.bin PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
+    set_target_properties(emulationstation.bin PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:WINDOWS")
+    set_target_properties(emulationstation.bin PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+    set_target_properties(emulationstation.bin PROPERTIES LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:WINDOWS")
 endif()
 
 
 #-------------------------------------------------------------------------------
 # set up CPack install stuff so `make install` does something useful
 
-install(TARGETS emulationstation
+install(TARGETS emulationstation.bin
     RUNTIME
     DESTINATION bin)
 
