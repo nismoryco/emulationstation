@@ -6,10 +6,6 @@
 #include "CollectionSystemManager.h"
 #include "Settings.h"
 #include "SystemData.h"
-#ifdef _RPI_
-#include "components/VideoPlayerComponent.h"
-#endif
-#include "components/VideoVlcComponent.h"
 
 GridGameListView::GridGameListView(Window* window, FileData* root) :
 	ISimpleGameListView(window, root),
@@ -27,17 +23,6 @@ GridGameListView::GridGameListView(Window* window, FileData* root) :
 	mName(window)
 {
 	const float padding = 0.01f;
-
-// Create the correct type of video window
-#ifdef _RPI_
-	if (Settings::getInstance()->getBool("VideoOmxPlayer"))
-		mVideo = new VideoPlayerComponent(window, "");
-	else
-		mVideo = new VideoVlcComponent(window, getTitlePath());
-#else
-	mVideo = new VideoVlcComponent(window, getTitlePath());
-#endif
-
 	mGrid.setPosition(mSize.x() * 0.1f, mSize.y() * 0.1f);
 	mGrid.setDefaultZIndex(20);
 	mGrid.setCursorChangedCallback([&](const CursorState& /*state*/) { updateInfoPanel(); });

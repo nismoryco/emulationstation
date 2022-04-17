@@ -89,7 +89,6 @@ endif()
 find_package(Freetype REQUIRED)
 find_package(FreeImage REQUIRED)
 find_package(SDL2 REQUIRED)
-find_package(VLC REQUIRED)
 
 #add ALSA for Linux
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -148,7 +147,6 @@ set(COMMON_INCLUDE_DIRS
     ${FREETYPE_INCLUDE_DIRS}
     ${FreeImage_INCLUDE_DIRS}
     ${SDL2_INCLUDE_DIR}
-    ${VLC_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/external
     ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src
 )
@@ -177,7 +175,6 @@ set(COMMON_LIBRARIES
     ${FREETYPE_LIBRARIES}
     ${FreeImage_LIBRARIES}
     ${SDL2_LIBRARY}
-    ${VLC_LIBRARIES}
     pugixml
     nanosvg
 )

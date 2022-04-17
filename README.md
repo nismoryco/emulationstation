@@ -17,15 +17,13 @@ EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, 
 All of this be easily installed with `apt-get`:
 ```bash
 sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev rapidjson-dev \
-  libasound2-dev libgles2-mesa-dev build-essential cmake fonts-droid-fallback libvlc-dev \
-  libvlccore-dev vlc-bin
+  libasound2-dev libgles2-mesa-dev build-essential cmake fonts-droid-fallback
 ```
 **On Fedora:**
 All of this be easily installed with `dnf` (with rpmfusion activated) :
 ```bash
 sudo dnf install SDL2-devel freeimage-devel freetype-devel \
-  alsa-lib-devel mesa-libGL-devel cmake \
-  vlc-devel rapidjson-devel 
+  alsa-lib-devel mesa-libGL-devel cmake rapidjson-devel 
 ```
 
 **Note**: this repository uses a git submodule - to checkout the source and all submodules, use
