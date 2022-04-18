@@ -11,19 +11,19 @@ Building
 
 EmulationStation uses some C++11 code, which means you'll need to use at least g++-4.7 on Linux, or VS2010 on Windows, to compile.
 
-EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, FreeImage, FreeType and RapidJSON.  You also should probably install the `fonts-droid` package which contains fallback fonts for Chinese/Japanese/Korean characters, but ES will still work fine without it (this package is only used at run-time).
+EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, FreeImage and FreeType.  You also should probably install the `fonts-droid` package which contains fallback fonts for Chinese/Japanese/Korean characters, but ES will still work fine without it (this package is only used at run-time).
 
 **On Debian/Ubuntu:**
 All of this be easily installed with `apt-get`:
 ```bash
-sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev rapidjson-dev \
+sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev \
   libasound2-dev libgles2-mesa-dev build-essential cmake fonts-droid-fallback
 ```
 **On Fedora:**
 All of this be easily installed with `dnf` (with rpmfusion activated) :
 ```bash
 sudo dnf install SDL2-devel freeimage-devel freetype-devel \
-  alsa-lib-devel mesa-libGL-devel cmake rapidjson-devel 
+  alsa-lib-devel mesa-libGL-devel cmake
 ```
 
 **Note**: this repository uses a git submodule - to checkout the source and all submodules, use
@@ -72,8 +72,6 @@ cmake -DCMAKE_BUILD_TYPE=Debug .
 [FreeType2](http://download.savannah.gnu.org/releases/freetype/freetype-2.4.9.tar.bz2) (you'll need to compile)
 
 [SDL2](http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip)
-
-[RapisJSON](https://github.com/tencent/rapidjson) (you'll need the `include/rapidsjon` added to the include path)
 
 (Remember to copy necessary .DLLs into the same folder as the executable: probably FreeImage.dll, freetype6.dll, SDL2.dll, and zlib1.dll. Exact list depends on if you built your libraries in "static" mode or not.)
 
