@@ -25,13 +25,10 @@ public:
 	public:
 		virtual void startScreenSaver() = 0;
 		virtual void stopScreenSaver() = 0;
-		virtual void nextMediaItem() = 0;
 		virtual void renderScreenSaver() = 0;
 		virtual bool allowSleep() = 0;
 		virtual void update(int deltaTime) = 0;
 		virtual bool isScreenSaverActive() = 0;
-		virtual FileData* getCurrentGame() = 0;
-		virtual void launchGame() = 0;
 	};
 
 	class InfoPopup {

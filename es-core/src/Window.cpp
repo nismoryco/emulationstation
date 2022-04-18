@@ -162,33 +162,7 @@ void Window::input(InputConfig* config, Input input)
 
 bool Window::inputDuringScreensaver(InputConfig* config, Input input)
 {
-	bool input_consumed = false;
-	std::string screensaver_type = Settings::getInstance()->getString("ScreenSaverBehavior");
-
-	if (screensaver_type == "random video" || screensaver_type == "slideshow")
-	{
-		bool is_select_input = config->isMappedLike("right", input) || config->isMappedTo("select", input);
-		bool is_start_input = config->isMappedTo("start", input);
-
-		if (is_select_input)
-		{
-			if (input.value) {
-				mScreenSaver->nextMediaItem();
-				// user input resets sleep time counter
-				mTimeSinceLastInput = 0;
-			}
-			input_consumed = true;
-		}
-		else if (is_start_input)
-		{
-			bool slideshow_custom_images = Settings::getInstance()->getBool("SlideshowScreenSaverCustomMediaSource");
-			if (screensaver_type == "random video" || !slideshow_custom_images)
-			{
-				mScreenSaver->launchGame();
-			}
-		}
-	}
-	return input_consumed;
+	return false;
 }
 
 void Window::update(int deltaTime)
