@@ -6,7 +6,6 @@
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
 #include "components/ImageGridComponent.h"
-#include "components/VideoComponent.h"
 #include "views/gamelist/ISimpleGameListView.h"
 
 class GridGameListView : public ISimpleGameListView
@@ -51,8 +50,6 @@ private:
 	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount;
 
 	ImageComponent mMarquee;
-	VideoComponent* mVideo;
-	bool mVideoPlaying;
 	ImageComponent mImage;
 	RatingComponent mRating;
 	DateTimeComponent mReleaseDate;
