@@ -15,7 +15,7 @@ if(POLICY CMP0072)
    cmake_policy(SET CMP0072 OLD)
 endif()
 
-project(emulationstation-all)
+project(emulationstation)
 
 #-------------------------------------------------------------------------------
 #add local find scripts to CMAKE path
