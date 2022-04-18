@@ -7,7 +7,6 @@
 
 class ImageComponent;
 class Sound;
-class VideoComponent;
 
 // Screensaver implementation for main window
 class SystemScreenSaver : public Window::ScreenSaver
@@ -49,7 +48,6 @@ private:
 	};
 
 private:
-	VideoComponent*		mVideoScreensaver;
 	ImageComponent*		mImageScreensaver;
 	Window*			mWindow;
 	STATE			mState;

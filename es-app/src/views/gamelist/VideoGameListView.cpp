@@ -13,8 +13,6 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root) :
 	mThumbnail(window),
 	mMarquee(window),
 	mImage(window),
-	mVideo(nullptr),
-	mVideoPlaying(false),
 
 	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window),
 	mLblGenre(window), mLblPlayers(window), mLblLastPlayed(window), mLblPlayCount(window),
@@ -106,7 +104,6 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root) :
 
 VideoGameListView::~VideoGameListView()
 {
-	delete mVideo;
 }
 
 void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
@@ -227,13 +224,11 @@ void VideoGameListView::updateInfoPanel()
 	bool fadingOut;
 	if(file == NULL)
 	{
-		mVideoPlaying = false;
 		//mMarquee.setImage("");
 		//mDescription.setText("");
 		fadingOut = true;
 
 	}else{
-		mVideoPlaying = true;
 		mThumbnail.setImage(file->getThumbnailPath());
 		mMarquee.setImage(file->getMarqueePath());
 		mImage.setImage(file->getImagePath());

@@ -21,7 +21,6 @@
 static int lastIndex = 0;
 
 SystemScreenSaver::SystemScreenSaver(Window* window) :
-	mVideoScreensaver(NULL),
 	mImageScreensaver(NULL),
 	mWindow(window),
 	mState(STATE_INACTIVE),
@@ -37,14 +36,13 @@ SystemScreenSaver::SystemScreenSaver(Window* window) :
 SystemScreenSaver::~SystemScreenSaver()
 {
 	mCurrentGame = NULL;
-	delete mVideoScreensaver;
 	delete mImageScreensaver;
 }
 
 bool SystemScreenSaver::allowSleep()
 {
 	//return false;
-	return ((mVideoScreensaver == NULL) && (mImageScreensaver == NULL));
+	return (mImageScreensaver == NULL);
 }
 
 bool SystemScreenSaver::isScreenSaverActive()
@@ -59,7 +57,7 @@ void SystemScreenSaver::setVideoScreensaver(std::string& path)
 
 void SystemScreenSaver::setImageScreensaver(std::string& path)
 {
-		mTimer = 0;
+	mTimer = 0;
 }
 
 bool SystemScreenSaver::isFileVideo(std::string& path)
@@ -82,35 +80,7 @@ void SystemScreenSaver::startScreenSaver()
 	}
 
 	std::string screensaver_behavior = Settings::getInstance()->getString("ScreenSaverBehavior");
-	if (!mVideoScreensaver && (screensaver_behavior == "random video"))
-	{
-		// Configure to fade out the windows, Skip Fading if Instant mode
-		mState = STATE_FADE_OUT_WINDOW;
-		mSwapTimeout = Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout");
-		mOpacity = 0.0f;
-
-		// Load a random video
-		std::string path = "";
-		pickRandomVideo(path);
-
-		int retry = 200;
-		while(retry > 0 && ((path.empty() || !Utils::FileSystem::exists(path)) || mCurrentGame == NULL))
-		{
-			retry--;
-			pickRandomVideo(path);
-		}
-
-		if (!path.empty() && Utils::FileSystem::exists(path))
-		{
-			setVideoScreensaver(path);
-			if (mCurrentGame != NULL) 
-			{
-				Scripting::fireEvent("screensaver-game-select", mCurrentGame->getSystem()->getName(), mCurrentGame->getPath(), mCurrentGame->getName(), "randomvideo");
-			}
-			return;
-		}
-	}
-	else if (screensaver_behavior == "slideshow")
+	if (screensaver_behavior == "slideshow")
 	{
 		// Configure to fade out the windows, Skip Fading if Instant mode
 		mState =  STATE_FADE_OUT_WINDOW;
@@ -172,8 +142,6 @@ void SystemScreenSaver::stopScreenSaver()
 	// so that we stop the background audio next time, unless we're restarting the screensaver
 	mStopBackgroundAudio = true;
 
-	delete mVideoScreensaver;
-	mVideoScreensaver = NULL;
 	delete mImageScreensaver;
 	mImageScreensaver = NULL;
 
@@ -192,19 +160,7 @@ void SystemScreenSaver::stopScreenSaver()
 void SystemScreenSaver::renderScreenSaver()
 {
 	std::string screensaver_behavior = Settings::getInstance()->getString("ScreenSaverBehavior");
-	if (mVideoScreensaver && screensaver_behavior == "random video")
-	{
-		// Render black background
-		Renderer::setMatrix(Transform4x4f::Identity());
-		Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
-
-		// Only render the video if the state requires it
-		if ((int)mState >= STATE_FADE_IN_VIDEO)
-		{
-			Transform4x4f transform = Transform4x4f::Identity();
-		}
-	}
-	else if (mImageScreensaver && screensaver_behavior == "slideshow")
+	if (mImageScreensaver && screensaver_behavior == "slideshow")
 	{
 		// Render black background
 		Renderer::setMatrix(Transform4x4f::Identity());

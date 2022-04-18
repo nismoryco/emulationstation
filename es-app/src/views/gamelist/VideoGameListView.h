@@ -7,8 +7,6 @@
 #include "components/ScrollableContainer.h"
 #include "views/gamelist/BasicGameListView.h"
 
-class VideoComponent;
-
 class VideoGameListView : public BasicGameListView
 {
 public:
@@ -35,7 +33,6 @@ private:
 
 	ImageComponent mThumbnail;
 	ImageComponent mMarquee;
-	VideoComponent* mVideo;
 	ImageComponent mImage;
 
 	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount;
@@ -55,9 +52,6 @@ private:
 
 	ScrollableContainer mDescContainer;
 	TextComponent mDescription;
-
-	bool		mVideoPlaying;
-
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
