@@ -4,8 +4,6 @@
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
-#include "guis/GuiSlideshowScreensaverOptions.h"
-#include "guis/GuiVideoScreensaverOptions.h"
 #include "Settings.h"
 
 GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const char* title) : GuiScreensaverOptions(window, title)
@@ -29,8 +27,6 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 	std::vector<std::string> screensavers;
 	screensavers.push_back("dim");
 	screensavers.push_back("black");
-	screensavers.push_back("random video");
-	screensavers.push_back("slideshow");
 	for(auto it = screensavers.cbegin(); it != screensavers.cend(); it++)
 		screensaver_behavior->add(*it, *it, Settings::getInstance()->getString("ScreenSaverBehavior") == *it);
 	addWithLabel("SCREENSAVER BEHAVIOR", screensaver_behavior);
@@ -43,21 +39,6 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 		}
 		Settings::getInstance()->setString("ScreenSaverBehavior", screensaver_behavior->getSelected());
 	});
-
-	ComponentListRow row;
-
-	// show filtered menu
-	row.elements.clear();
-	row.addElement(std::make_shared<TextComponent>(mWindow, "VIDEO SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-	row.addElement(makeArrow(mWindow), false);
-	row.makeAcceptInputHandler(std::bind(&GuiGeneralScreensaverOptions::openVideoScreensaverOptions, this));
-	addRow(row);
-
-	row.elements.clear();
-	row.addElement(std::make_shared<TextComponent>(mWindow, "SLIDESHOW SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-	row.addElement(makeArrow(mWindow), false);
-	row.makeAcceptInputHandler(std::bind(&GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions, this));
-	addRow(row);
 
 	// system sleep time
 	float stepw = 5.f;
@@ -89,12 +70,4 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 
 GuiGeneralScreensaverOptions::~GuiGeneralScreensaverOptions()
 {
-}
-
-void GuiGeneralScreensaverOptions::openVideoScreensaverOptions() {
-	mWindow->pushGui(new GuiVideoScreensaverOptions(mWindow, "VIDEO SCREENSAVER"));
-}
-
-void GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions() {
-    mWindow->pushGui(new GuiSlideshowScreensaverOptions(mWindow, "SLIDESHOW SCREENSAVER"));
 }
