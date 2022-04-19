@@ -383,38 +383,11 @@ void GuiMenu::openOtherSettings()
 	s->addWithLabel("SHOW HIDDEN FILES", hidden_files);
 	s->addSaveFunc([hidden_files] { Settings::getInstance()->setBool("ShowHiddenFiles", hidden_files->getState()); });
 
-#ifdef _RPI_
-	// Video Player - VideoOmxPlayer
-	auto omx_player = std::make_shared<SwitchComponent>(mWindow);
-	omx_player->setState(Settings::getInstance()->getBool("VideoOmxPlayer"));
-	s->addWithLabel("USE OMX PLAYER (HW ACCELERATED)", omx_player);
-	s->addSaveFunc([omx_player]
-	{
-		// need to reload all views to re-create the right video components
-		bool needReload = false;
-		if(Settings::getInstance()->getBool("VideoOmxPlayer") != omx_player->getState())
-			needReload = true;
-
-		Settings::getInstance()->setBool("VideoOmxPlayer", omx_player->getState());
-
-		if(needReload)
-			ViewController::get()->reloadAll();
-	});
-
-#endif
-
-	// hidden files
-	auto background_indexing = std::make_shared<SwitchComponent>(mWindow);
-	background_indexing->setState(Settings::getInstance()->getBool("BackgroundIndexing"));
-	s->addWithLabel("INDEX FILES DURING SCREENSAVER", background_indexing);
-	s->addSaveFunc([background_indexing] { Settings::getInstance()->setBool("BackgroundIndexing", background_indexing->getState()); });
-
 	// framerate
 	auto framerate = std::make_shared<SwitchComponent>(mWindow);
 	framerate->setState(Settings::getInstance()->getBool("DrawFramerate"));
 	s->addWithLabel("SHOW FRAMERATE", framerate);
 	s->addSaveFunc([framerate] { Settings::getInstance()->setBool("DrawFramerate", framerate->getState()); });
-
 
 	mWindow->pushGui(s);
 

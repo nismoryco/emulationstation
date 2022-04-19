@@ -102,45 +102,12 @@ void Settings::setDefaults()
 	mStringMap["SaveGamelistsMode"] = "on exit";
 
 	mBoolMap["ScreenSaverControls"] = true;
-	mStringMap["ScreenSaverGameInfo"] = "never";
-	mBoolMap["StretchVideoOnScreenSaver"] = false;
 
-	mIntMap["ScreenSaverSwapMediaTimeout"] = 10000;
-	mBoolMap["SlideshowScreenSaverStretch"] = false;
-	mStringMap["SlideshowScreenSaverBackgroundAudioFile"] = Utils::FileSystem::getHomePath() + "/.emulationstation/slideshow/audio/slideshow_bg.wav";
-	mBoolMap["SlideshowScreenSaverCustomMediaSource"] = false;
-	mStringMap["SlideshowScreenSaverMediaDir"] = Utils::FileSystem::getHomePath() + "/.emulationstation/slideshow/media";
-	mStringMap["SlideshowScreenSaverImageFilter"] = ".png,.jpg";
-	mStringMap["SlideshowScreenSaverVideoFilter"] = ".mp4,.avi";
-	mBoolMap["SlideshowScreenSaverRecurse"] = false;
-
-	// This setting only applies to raspberry pi but set it for all platforms so
-	// we don't get a warning if we encounter it on a different platform
-	mBoolMap["VideoOmxPlayer"] = false;
-	#ifdef _RPI_
-		// we're defaulting to OMX Player for full screen video on the Pi
-		mBoolMap["ScreenSaverOmxPlayer"] = true;
-		// use OMX Player defaults
-		mStringMap["SubtitleFont"] = "/usr/share/fonts/truetype/freefont/FreeSans.ttf";
-		mStringMap["SubtitleItalicFont"] = "/usr/share/fonts/truetype/freefont/FreeSansOblique.ttf";
-		mIntMap["SubtitleSize"] = 55;
-		mStringMap["SubtitleAlignment"] = "left";
-	#else
-		mBoolMap["ScreenSaverOmxPlayer"] = false;
-	#endif
-
-	mIntMap["ScreenSaverSwapVideoTimeout"] = 30000;
-
-	mBoolMap["VideoAudio"] = true;
-	mBoolMap["ScreenSaverVideoMute"] = false;
-	// Audio out device for Video playback using OMX player.
-	mStringMap["OMXAudioDev"] = "both";
 	mStringMap["CollectionSystemsAuto"] = "";
 	mStringMap["CollectionSystemsCustom"] = "";
 	mBoolMap["CollectionShowSystemInfo"] = true;
 	mBoolMap["SortAllSystems"] = false;
 	mBoolMap["UseCustomCollectionsSystem"] = true;
-	mBoolMap["BackgroundIndexing"] = false;
 
 	mBoolMap["LocalArt"] = false;
 
@@ -169,7 +136,7 @@ void Settings::setDefaults()
 	mBoolMap["UseFullscreenPaging"] = false;
 
 	mBoolMap["IgnoreLeadingArticles"] = false;
-	//No spaces!  Order is important!
+	//No spaces! Order is important!
 	//"The A Squad" given [a,an,the] will sort as "A Squad", but given [the,a,an] will sort as "Squad"
 	mStringMap["LeadingArticles"] = "a,an,the";
 }
