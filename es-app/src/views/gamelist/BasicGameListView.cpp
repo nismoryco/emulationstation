@@ -1,7 +1,6 @@
 #include "views/gamelist/BasicGameListView.h"
 
 #include "utils/FileSystemUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "Settings.h"

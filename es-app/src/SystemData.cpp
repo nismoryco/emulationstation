@@ -9,7 +9,6 @@
 #include "platform.h"
 #include "Settings.h"
 #include "ThemeData.h"
-#include "views/UIModeController.h"
 #include <fstream>
 #include <random>
 #include "utils/StringUtil.h"
@@ -452,7 +451,7 @@ std::string SystemData::getConfigPath(bool forWrite)
 bool SystemData::isVisible()
 {
    return (getDisplayedGameCount() > 0 ||
-           (UIModeController::getInstance()->isUIModeFull() && mIsCollectionSystem) ||
+           mIsCollectionSystem ||
            (mIsCollectionSystem && mName == "favorites"));
 }
 

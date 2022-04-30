@@ -8,7 +8,6 @@
 #include "guis/GuiGeneralScreensaverOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiSettings.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "EmulationStation.h"
@@ -23,17 +22,11 @@
 
 GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MENU"), mVersion(window)
 {
-	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
-
-	if (isFullUI) {
-		addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundSettings(); });
-		addEntry("UI SETTINGS", 0x777777FF, true, [this] { openUISettings(); });
-		addEntry("GAME COLLECTION SETTINGS", 0x777777FF, true, [this] { openCollectionSystemSettings(); });
-		addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherSettings(); });
-		addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
-	} else {
-		addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundSettings(); });
-	}
+	addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundSettings(); });
+	addEntry("UI SETTINGS", 0x777777FF, true, [this] { openUISettings(); });
+	addEntry("GAME COLLECTION SETTINGS", 0x777777FF, true, [this] { openCollectionSystemSettings(); });
+	addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherSettings(); });
+	addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
 
 	addEntry("QUIT", 0x777777FF, true, [this] {openQuitMenu(); });
 
@@ -53,95 +46,90 @@ void GuiMenu::openSoundSettings()
 	s->addWithLabel("SYSTEM VOLUME", volume);
 	s->addSaveFunc([volume] { VolumeControl::getInstance()->setVolume((int)Math::round(volume->getValue())); });
 
-	if (UIModeController::getInstance()->isUIModeFull())
-	{
-#if defined(__linux__)
-		// audio card
-		auto audio_card = std::make_shared< OptionListComponent<std::string> >(mWindow, "AUDIO CARD", false);
-		std::vector<std::string> audio_cards;
-		audio_cards.push_back("default");
-		audio_cards.push_back("sysdefault");
-		audio_cards.push_back("dmix");
-		audio_cards.push_back("hw");
-		audio_cards.push_back("plughw");
-		audio_cards.push_back("null");
-		if (Settings::getInstance()->getString("AudioCard") != "") {
-			if(std::find(audio_cards.begin(), audio_cards.end(), Settings::getInstance()->getString("AudioCard")) == audio_cards.end()) {
-				audio_cards.push_back(Settings::getInstance()->getString("AudioCard"));
-			}
+	// audio card
+	auto audio_card = std::make_shared< OptionListComponent<std::string> >(mWindow, "AUDIO CARD", false);
+	std::vector<std::string> audio_cards;
+	audio_cards.push_back("default");
+	audio_cards.push_back("sysdefault");
+	audio_cards.push_back("dmix");
+	audio_cards.push_back("hw");
+	audio_cards.push_back("plughw");
+	audio_cards.push_back("null");
+	if (Settings::getInstance()->getString("AudioCard") != "") {
+		if(std::find(audio_cards.begin(), audio_cards.end(), Settings::getInstance()->getString("AudioCard")) == audio_cards.end()) {
+			audio_cards.push_back(Settings::getInstance()->getString("AudioCard"));
 		}
-		for(auto ac = audio_cards.cbegin(); ac != audio_cards.cend(); ac++)
-			audio_card->add(*ac, *ac, Settings::getInstance()->getString("AudioCard") == *ac);
-		s->addWithLabel("AUDIO CARD", audio_card);
-		s->addSaveFunc([audio_card] {
-			Settings::getInstance()->setString("AudioCard", audio_card->getSelected());
-			VolumeControl::getInstance()->deinit();
-			VolumeControl::getInstance()->init();
-		});
+	}
+	for(auto ac = audio_cards.cbegin(); ac != audio_cards.cend(); ac++)
+		audio_card->add(*ac, *ac, Settings::getInstance()->getString("AudioCard") == *ac);
+	s->addWithLabel("AUDIO CARD", audio_card);
+	s->addSaveFunc([audio_card] {
+		Settings::getInstance()->setString("AudioCard", audio_card->getSelected());
+		VolumeControl::getInstance()->deinit();
+		VolumeControl::getInstance()->init();
+	});
 
-		// volume control device
-		auto vol_dev = std::make_shared< OptionListComponent<std::string> >(mWindow, "AUDIO DEVICE", false);
-		std::vector<std::string> transitions;
-		transitions.push_back("PCM");
-		transitions.push_back("HDMI");
-		transitions.push_back("Headphone");
-		transitions.push_back("Speaker");
-		transitions.push_back("Master");
-		transitions.push_back("Digital");
-		transitions.push_back("Analogue");
-		if (Settings::getInstance()->getString("AudioDevice") != "") {
-			if(std::find(transitions.begin(), transitions.end(), Settings::getInstance()->getString("AudioDevice")) == transitions.end()) {
-				transitions.push_back(Settings::getInstance()->getString("AudioDevice"));
-			}
+	// volume control device
+	auto vol_dev = std::make_shared< OptionListComponent<std::string> >(mWindow, "AUDIO DEVICE", false);
+	std::vector<std::string> transitions;
+	transitions.push_back("PCM");
+	transitions.push_back("HDMI");
+	transitions.push_back("Headphone");
+	transitions.push_back("Speaker");
+	transitions.push_back("Master");
+	transitions.push_back("Digital");
+	transitions.push_back("Analogue");
+	if (Settings::getInstance()->getString("AudioDevice") != "") {
+		if(std::find(transitions.begin(), transitions.end(), Settings::getInstance()->getString("AudioDevice")) == transitions.end()) {
+			transitions.push_back(Settings::getInstance()->getString("AudioDevice"));
 		}
-		for(auto it = transitions.cbegin(); it != transitions.cend(); it++)
-			vol_dev->add(*it, *it, Settings::getInstance()->getString("AudioDevice") == *it);
-		s->addWithLabel("AUDIO DEVICE", vol_dev);
-		s->addSaveFunc([vol_dev] {
-			Settings::getInstance()->setString("AudioDevice", vol_dev->getSelected());
-			VolumeControl::getInstance()->deinit();
-			VolumeControl::getInstance()->init();
-		});
-#endif
+	}
+	for(auto it = transitions.cbegin(); it != transitions.cend(); it++)
+		vol_dev->add(*it, *it, Settings::getInstance()->getString("AudioDevice") == *it);
+	s->addWithLabel("AUDIO DEVICE", vol_dev);
+	s->addSaveFunc([vol_dev] {
+		Settings::getInstance()->setString("AudioDevice", vol_dev->getSelected());
+		VolumeControl::getInstance()->deinit();
+		VolumeControl::getInstance()->init();
+	});
 
-		// disable sounds
-		auto sounds_enabled = std::make_shared<SwitchComponent>(mWindow);
-		sounds_enabled->setState(Settings::getInstance()->getBool("EnableSounds"));
-		s->addWithLabel("ENABLE NAVIGATION SOUNDS", sounds_enabled);
-		s->addSaveFunc([sounds_enabled] {
-			Settings::getInstance()->setBool("EnableSounds", sounds_enabled->getState());
-		});
+	// disable sounds
+	auto sounds_enabled = std::make_shared<SwitchComponent>(mWindow);
+	sounds_enabled->setState(Settings::getInstance()->getBool("EnableSounds"));
+	s->addWithLabel("ENABLE NAVIGATION SOUNDS", sounds_enabled);
+	s->addSaveFunc([sounds_enabled] {
+		Settings::getInstance()->setBool("EnableSounds", sounds_enabled->getState());
+	});
 
-		auto video_audio = std::make_shared<SwitchComponent>(mWindow);
-		video_audio->setState(Settings::getInstance()->getBool("VideoAudio"));
-		s->addWithLabel("ENABLE VIDEO AUDIO", video_audio);
-		s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("VideoAudio", video_audio->getState()); });
+	auto video_audio = std::make_shared<SwitchComponent>(mWindow);
+	video_audio->setState(Settings::getInstance()->getBool("VideoAudio"));
+	s->addWithLabel("ENABLE VIDEO AUDIO", video_audio);
+	s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("VideoAudio", video_audio->getState()); });
 
 #ifdef _RPI_
-		// OMX player Audio Device
-		auto omx_audio_dev = std::make_shared< OptionListComponent<std::string> >(mWindow, "OMX PLAYER AUDIO DEVICE", false);
-		std::vector<std::string> omx_cards;
-		// RPi Specific  Audio Cards
-		omx_cards.push_back("local");
-		omx_cards.push_back("hdmi");
-		omx_cards.push_back("both");
-		omx_cards.push_back("alsa");
-		omx_cards.push_back("alsa:hw:0,0");
-		omx_cards.push_back("alsa:hw:1,0");
-		if (Settings::getInstance()->getString("OMXAudioDev") != "") {
-			if (std::find(omx_cards.begin(), omx_cards.end(), Settings::getInstance()->getString("OMXAudioDev")) == omx_cards.end()) {
-				omx_cards.push_back(Settings::getInstance()->getString("OMXAudioDev"));
-			}
+	// OMX player Audio Device
+	auto omx_audio_dev = std::make_shared< OptionListComponent<std::string> >(mWindow, "OMX PLAYER AUDIO DEVICE", false);
+	std::vector<std::string> omx_cards;
+	// RPi Specific  Audio Cards
+	omx_cards.push_back("local");
+	omx_cards.push_back("hdmi");
+	omx_cards.push_back("both");
+	omx_cards.push_back("alsa");
+	omx_cards.push_back("alsa:hw:0,0");
+	omx_cards.push_back("alsa:hw:1,0");
+	if (Settings::getInstance()->getString("OMXAudioDev") != "") {
+		if (std::find(omx_cards.begin(), omx_cards.end(), Settings::getInstance()->getString("OMXAudioDev")) == omx_cards.end()) {
+			omx_cards.push_back(Settings::getInstance()->getString("OMXAudioDev"));
 		}
-		for (auto it = omx_cards.cbegin(); it != omx_cards.cend(); it++)
-			omx_audio_dev->add(*it, *it, Settings::getInstance()->getString("OMXAudioDev") == *it);
-		s->addWithLabel("OMX PLAYER AUDIO DEVICE", omx_audio_dev);
-		s->addSaveFunc([omx_audio_dev] {
-			if (Settings::getInstance()->getString("OMXAudioDev") != omx_audio_dev->getSelected())
-				Settings::getInstance()->setString("OMXAudioDev", omx_audio_dev->getSelected());
-		});
-#endif
 	}
+	for (auto it = omx_cards.cbegin(); it != omx_cards.cend(); it++)
+		omx_audio_dev->add(*it, *it, Settings::getInstance()->getString("OMXAudioDev") == *it);
+	s->addWithLabel("OMX PLAYER AUDIO DEVICE", omx_audio_dev);
+	s->addSaveFunc([omx_audio_dev] {
+		if (Settings::getInstance()->getString("OMXAudioDev") != omx_audio_dev->getSelected())
+			Settings::getInstance()->setString("OMXAudioDev", omx_audio_dev->getSelected());
+	});
+#endif
 
 	mWindow->pushGui(s);
 
@@ -150,32 +138,7 @@ void GuiMenu::openSoundSettings()
 void GuiMenu::openUISettings()
 {
 	auto s = new GuiSettings(mWindow, "UI SETTINGS");
-
-	//UI mode
-	auto UImodeSelection = std::make_shared< OptionListComponent<std::string> >(mWindow, "UI MODE", false);
-	std::vector<std::string> UImodes = UIModeController::getInstance()->getUIModes();
-	for (auto it = UImodes.cbegin(); it != UImodes.cend(); it++)
-		UImodeSelection->add(*it, *it, Settings::getInstance()->getString("UIMode") == *it);
-	s->addWithLabel("UI MODE", UImodeSelection);
 	Window* window = mWindow;
-	s->addSaveFunc([ UImodeSelection, window]
-	{
-		std::string selectedMode = UImodeSelection->getSelected();
-		if (selectedMode != "Full")
-		{
-			std::string msg = "You are changing the UI to a restricted mode:\n" + selectedMode + "\n";
-			msg += "This will hide most menu-options to prevent changes to the system.\n";
-			msg += "To unlock and return to the full UI, enter this code: \n";
-			msg += "\"" + UIModeController::getInstance()->getFormattedPassKeyStr() + "\"\n\n";
-			msg += "Do you want to proceed?";
-			window->pushGui(new GuiMsgBox(window, msg,
-				"YES", [selectedMode] {
-					LOG(LogDebug) << "Setting UI mode to " << selectedMode;
-					Settings::getInstance()->setString("UIMode", selectedMode);
-					Settings::getInstance()->saveFile();
-			}, "NO",nullptr));
-		}
-	});
 
 	// screensaver
 	ComponentListRow screensaver_row;
@@ -340,7 +303,7 @@ void GuiMenu::openOtherSettings()
 	auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
 	// maximum vram
-	auto max_vram = std::make_shared<SliderComponent>(mWindow, 0.f, 256.f, 10.f, "Mb");
+	auto max_vram = std::make_shared<SliderComponent>(mWindow, 0.f, 200.f, 10.f, "Mb");
 	max_vram->setValue((float)(Settings::getInstance()->getInt("MaxVRAM")));
 	s->addWithLabel("VRAM LIMIT", max_vram);
 	s->addSaveFunc([max_vram] { Settings::getInstance()->setInt("MaxVRAM", (int)Math::round(max_vram->getValue())); });
@@ -406,41 +369,38 @@ void GuiMenu::openQuitMenu()
 	bool confirm_quit = Settings::getInstance()->getBool("ConfirmQuit");
 
 	ComponentListRow row;
-	if (UIModeController::getInstance()->isUIModeFull())
+	auto static restart_es_fx = []() {
+		if (quitES(QuitMode::RESTART)) {
+			LOG(LogWarning) << "Restart terminated with non-zero result!";
+		}
+	};
+
+	if (confirm_quit) {
+		row.makeAcceptInputHandler([window] {
+			window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES", restart_es_fx, "NO", nullptr));
+		});
+	} else {
+		row.makeAcceptInputHandler(restart_es_fx);
+	}
+	row.addElement(std::make_shared<TextComponent>(window, "RESTART EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	s->addRow(row);
+
+	if(Settings::getInstance()->getBool("ShowExit"))
 	{
-		auto static restart_es_fx = []() {
-			if (quitES(QuitMode::RESTART)) {
-				LOG(LogWarning) << "Restart terminated with non-zero result!";
-			}
+		auto static quit_es_fx = [] {
+			quitES();
 		};
 
+		row.elements.clear();
 		if (confirm_quit) {
 			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES", restart_es_fx, "NO", nullptr));
+				window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES", quit_es_fx, "NO", nullptr));
 			});
 		} else {
-			row.makeAcceptInputHandler(restart_es_fx);
+			row.makeAcceptInputHandler(quit_es_fx);
 		}
-		row.addElement(std::make_shared<TextComponent>(window, "RESTART EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 		s->addRow(row);
-
-		if(Settings::getInstance()->getBool("ShowExit"))
-		{
-			auto static quit_es_fx = [] {
-				quitES();
-			};
-
-			row.elements.clear();
-			if (confirm_quit) {
-				row.makeAcceptInputHandler([window] {
-					window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES", quit_es_fx, "NO", nullptr));
-				});
-			} else {
-				row.makeAcceptInputHandler(quit_es_fx);
-			}
-			row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-			s->addRow(row);
-		}
 	}
 
 	auto static reboot_sys_fx = [] {
@@ -481,11 +441,11 @@ void GuiMenu::openQuitMenu()
 
 void GuiMenu::addVersionInfo()
 {
-	std::string  buildDate = (Settings::getInstance()->getBool("Debug") ? std::string( "   (" + Utils::String::toUpper(PROGRAM_BUILT_STRING) + ")") : (""));
+	std::string buildDate = (Settings::getInstance()->getBool("Debug") ? std::string( "   (" + Utils::String::toUpper(PROGRAM_BUILT_STRING) + ")") : (""));
 
 	mVersion.setFont(Font::get(FONT_SIZE_SMALL));
 	mVersion.setColor(0x5E5E5EFF);
-	mVersion.setText("EMULATIONSTATION V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) + buildDate);
+	mVersion.setText("EMULATIONSTATION " + Utils::String::toUpper(PROGRAM_VERSION_STRING) + buildDate);
 	mVersion.setHorizontalAlignment(ALIGN_CENTER);
 	addChild(&mVersion);
 }

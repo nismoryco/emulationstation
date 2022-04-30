@@ -1,7 +1,6 @@
 #include "FileFilterIndex.h"
 
 #include "utils/StringUtil.h"
-#include "views/UIModeController.h"
 #include "FileData.h"
 #include "Log.h"
 #include "Settings.h"

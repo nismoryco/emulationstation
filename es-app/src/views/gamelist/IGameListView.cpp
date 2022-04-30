@@ -1,7 +1,6 @@
 #include "views/gamelist/IGameListView.h"
 
 #include "guis/GuiGamelistOptions.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "Sound.h"
 #include "Window.h"

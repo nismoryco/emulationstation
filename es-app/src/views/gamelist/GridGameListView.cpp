@@ -1,7 +1,6 @@
 #include "views/gamelist/GridGameListView.h"
 
 #include "animations/LambdaAnimation.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "Settings.h"

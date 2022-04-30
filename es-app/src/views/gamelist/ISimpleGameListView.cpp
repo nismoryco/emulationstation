@@ -1,6 +1,5 @@
 #include "views/gamelist/ISimpleGameListView.h"
 
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "Settings.h"

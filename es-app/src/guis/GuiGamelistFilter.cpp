@@ -1,7 +1,6 @@
 #include "guis/GuiGamelistFilter.h"
 
 #include "components/OptionListComponent.h"
-#include "views/UIModeController.h"
 #include "SystemData.h"
 
 GuiGamelistFilter::GuiGamelistFilter(Window* window, SystemData* system) : GuiComponent(window), mMenu(window, "FILTER GAMELIST BY"), mSystem(system)
@@ -51,11 +50,7 @@ void GuiGamelistFilter::addFiltersToMenu()
 {
 	std::vector<FilterDataDecl> decls = mFilterIndex->getFilterDataDecls();
 
-	int skip = 0;
-	if (!UIModeController::getInstance()->isUIModeFull())
-		skip = 1;
-
-	for (std::vector<FilterDataDecl>::const_iterator it = decls.cbegin(); it != decls.cend()-skip; ++it ) {
+	for (std::vector<FilterDataDecl>::const_iterator it = decls.cbegin(); it != decls.cend(); ++it ) {
 
 		FilterIndexType type = (*it).type; // type of filter
 		std::map<std::string, int>* allKeys = (*it).allIndexKeys; // all possible filters for this type

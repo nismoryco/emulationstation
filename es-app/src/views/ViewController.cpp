@@ -10,7 +10,6 @@
 #include "views/gamelist/GridGameListView.h"
 #include "views/gamelist/VideoGameListView.h"
 #include "views/SystemView.h"
-#include "views/UIModeController.h"
 #include "FileFilterIndex.h"
 #include "Log.h"
 #include "Settings.h"
@@ -372,11 +371,6 @@ bool ViewController::input(InputConfig* config, Input input)
 		return true;
 	}
 
-	if(UIModeController::getInstance()->listen(config, input))  // check if UI mode has changed due to passphrase completion
-	{
-		return true;
-	}
-
 	if(mCurrentView)
 		return mCurrentView->input(config, input);
 
@@ -402,9 +396,6 @@ void ViewController::render(const Transform4x4f& parentTrans)
 	// camera position, position + size
 	Vector3f viewStart = transInverse.translation();
 	Vector3f viewEnd = transInverse * Vector3f((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight(), 0);
-
-	// Keep track of UI mode changes.
-	UIModeController::getInstance()->monitorUIMode();
 
 	// draw systemview
 	getSystemListView()->render(trans);
