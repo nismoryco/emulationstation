@@ -103,7 +103,6 @@ You can use `--help` or `-h` to view a list of command-line options. Briefly out
 --windowed                      not fullscreen, should be used with --resolution
 --vsync [1/on or 0/off]         turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use in Mb before swapping. 0 for unlimited
---force-kid             Force the UI mode to be Kid
 --force-kiosk           Force the UI mode to be Kiosk
 --force-disable-filters         Force the UI to ignore applied filters in gamelist
 --help, -h                      summon a sentient, angry tuba

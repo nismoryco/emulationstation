@@ -88,16 +88,10 @@ bool UIModeController::isUIModeFull()
 	return ((mCurrentUIMode == "Full") && !Settings::getInstance()->getBool("ForceKiosk"));
 }
 
-bool UIModeController::isUIModeKid()
-{
-	return (Settings::getInstance()->getBool("ForceKid") ||
-		((mCurrentUIMode == "Kid") && !Settings::getInstance()->getBool("ForceKiosk")));
-}
-
 bool UIModeController::isUIModeKiosk()
 {
 	return (Settings::getInstance()->getBool("ForceKiosk") ||
-		((mCurrentUIMode == "Kiosk") && !Settings::getInstance()->getBool("ForceKid")));
+		((mCurrentUIMode == "Kiosk")));
 }
 
 std::string UIModeController::getFormattedPassKeyStr()

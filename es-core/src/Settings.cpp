@@ -16,7 +16,6 @@ std::vector<const char*> settings_dont_save {
 	{ "DebugGrid" },
 	{ "DebugText" },
 	{ "DebugImage" },
-	{ "ForceKid" },
 	{ "ForceKiosk" },
 	{ "IgnoreGamelist" },
 	{ "HideConsole" },
@@ -66,7 +65,6 @@ void Settings::setDefaults()
 	mBoolMap["SplashScreen"] = true;
 	mBoolMap["SplashScreenProgress"] = true;
 	mStringMap["StartupSystem"] = "";
-	mBoolMap["DisableKidStartMenu"] = true;
 
 	mBoolMap["VSync"] = true;
 
@@ -120,7 +118,6 @@ void Settings::setDefaults()
 	mStringMap["UIMode"] = "Full";
 	mStringMap["UIMode_passkey"] = "uuddlrlrba";
 	mBoolMap["ForceKiosk"] = false;
-	mBoolMap["ForceKid"] = false;
 	mBoolMap["ForceDisableFilters"] = false;
 
 	mIntMap["WindowWidth"]   = 0;

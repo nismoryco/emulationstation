@@ -54,8 +54,6 @@ void GuiGamelistFilter::addFiltersToMenu()
 	int skip = 0;
 	if (!UIModeController::getInstance()->isUIModeFull())
 		skip = 1;
-	if (UIModeController::getInstance()->isUIModeKid())
-		skip = 2;
 
 	for (std::vector<FilterDataDecl>::const_iterator it = decls.cbegin(); it != decls.cend()-skip; ++it ) {
 

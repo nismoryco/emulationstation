@@ -41,7 +41,8 @@ bool parseArgs(int argc, char* argv[])
 			i += 2; // skip the argument value
 			Settings::getInstance()->setInt("WindowWidth", width);
 			Settings::getInstance()->setInt("WindowHeight", height);
-		}else if(strcmp(argv[i], "--screensize") == 0)
+		}
+		else if(strcmp(argv[i], "--screensize") == 0)
 		{
 			if(i >= argc - 2)
 			{
@@ -54,7 +55,8 @@ bool parseArgs(int argc, char* argv[])
 			i += 2; // skip the argument value
 			Settings::getInstance()->setInt("ScreenWidth", width);
 			Settings::getInstance()->setInt("ScreenHeight", height);
-		}else if(strcmp(argv[i], "--screenoffset") == 0)
+		}
+		else if(strcmp(argv[i], "--screenoffset") == 0)
 		{
 			if(i >= argc - 2)
 			{
@@ -67,7 +69,8 @@ bool parseArgs(int argc, char* argv[])
 			i += 2; // skip the argument value
 			Settings::getInstance()->setInt("ScreenOffsetX", x);
 			Settings::getInstance()->setInt("ScreenOffsetY", y);
-		}else if (strcmp(argv[i], "--screenrotate") == 0)
+		}
+		else if (strcmp(argv[i], "--screenrotate") == 0)
 		{
 			if (i >= argc - 1)
 			{
@@ -78,44 +81,56 @@ bool parseArgs(int argc, char* argv[])
 			int rotate = atoi(argv[i + 1]);
 			++i; // skip the argument value
 			Settings::getInstance()->setInt("ScreenRotate", rotate);
-		}else if(strcmp(argv[i], "--gamelist-only") == 0)
+		}
+		else if(strcmp(argv[i], "--gamelist-only") == 0)
 		{
 			Settings::getInstance()->setBool("ParseGamelistOnly", true);
-		}else if(strcmp(argv[i], "--ignore-gamelist") == 0)
+		}
+		else if(strcmp(argv[i], "--ignore-gamelist") == 0)
 		{
 			Settings::getInstance()->setBool("IgnoreGamelist", true);
-		}else if(strcmp(argv[i], "--show-hidden-files") == 0)
+		}
+		else if(strcmp(argv[i], "--show-hidden-files") == 0)
 		{
 			Settings::getInstance()->setBool("ShowHiddenFiles", true);
-		}else if(strcmp(argv[i], "--draw-framerate") == 0)
+		}
+		else if(strcmp(argv[i], "--draw-framerate") == 0)
 		{
 			Settings::getInstance()->setBool("DrawFramerate", true);
-		}else if(strcmp(argv[i], "--no-exit") == 0)
+		}
+		else if(strcmp(argv[i], "--no-exit") == 0)
 		{
 			Settings::getInstance()->setBool("ShowExit", false);
-		}else if(strcmp(argv[i], "--no-confirm-quit") == 0)
+		}
+		else if(strcmp(argv[i], "--no-confirm-quit") == 0)
 		{
 			Settings::getInstance()->setBool("ConfirmQuit", false);
-		}else if(strcmp(argv[i], "--no-splash") == 0)
+		}
+		else if(strcmp(argv[i], "--no-splash") == 0)
 		{
 			Settings::getInstance()->setBool("SplashScreen", false);
-		}else if(strcmp(argv[i], "--debug") == 0)
+		}
+		else if(strcmp(argv[i], "--debug") == 0)
 		{
 			Settings::getInstance()->setBool("Debug", true);
 			Settings::getInstance()->setBool("HideConsole", false);
 			Log::setReportingLevel(LogDebug);
-		}else if(strcmp(argv[i], "--fullscreen-borderless") == 0)
+		}
+		else if(strcmp(argv[i], "--fullscreen-borderless") == 0)
 		{
 			Settings::getInstance()->setBool("FullscreenBorderless", true);
-		}else if(strcmp(argv[i], "--windowed") == 0)
+		}
+		else if(strcmp(argv[i], "--windowed") == 0)
 		{
 			Settings::getInstance()->setBool("Windowed", true);
-		}else if(strcmp(argv[i], "--vsync") == 0)
+		}
+		else if(strcmp(argv[i], "--vsync") == 0)
 		{
 			bool vsync = (strcmp(argv[i + 1], "on") == 0 || strcmp(argv[i + 1], "1") == 0) ? true : false;
 			Settings::getInstance()->setBool("VSync", vsync);
 			i++; // skip vsync value
-		}else if(strcmp(argv[i], "--max-vram") == 0)
+		}
+		else if(strcmp(argv[i], "--max-vram") == 0)
 		{
 			int maxVRAM = atoi(argv[i + 1]);
 			Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
@@ -123,10 +138,6 @@ bool parseArgs(int argc, char* argv[])
 		else if (strcmp(argv[i], "--force-kiosk") == 0)
 		{
 			Settings::getInstance()->setBool("ForceKiosk", true);
-		}
-		else if (strcmp(argv[i], "--force-kid") == 0)
-		{
-			Settings::getInstance()->setBool("ForceKid", true);
 		}
 		else if (strcmp(argv[i], "--force-disable-filters") == 0)
 		{
@@ -154,7 +165,6 @@ bool parseArgs(int argc, char* argv[])
 				"--windowed                     not fullscreen, should be used with --resolution\n"
 				"--vsync [1/on or 0/off]        turn vsync on or off (default is on)\n"
 				"--max-vram [size]              max VRAM to use in MB before swapping. 0 for unlimited\n"
-				"--force-kid                    force the UI mode to be Kid\n"
 				"--force-kiosk                  force the UI mode to be Kiosk\n"
 				"--force-disable-filters        force the UI to ignore applied filters in gamelist\n"
 				"--help, -h                     summon a sentient, angry tuba\n\n"

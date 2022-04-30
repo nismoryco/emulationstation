@@ -100,7 +100,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}
 
 			return true;
-		}else if(config->isMappedTo("b", input))
+		}
+		else if(config->isMappedTo("b", input))
 		{
 			if(mCursorStack.size())
 			{
@@ -119,7 +120,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}
 
 			return true;
-		}else if(config->isMappedLike(getQuickSystemSelectRightButton(), input))
+		}
+		else if(config->isMappedLike(getQuickSystemSelectRightButton(), input))
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
@@ -127,7 +129,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 				ViewController::get()->goToNextGameList();
 				return true;
 			}
-		}else if(config->isMappedLike(getQuickSystemSelectLeftButton(), input))
+		}
+		else if(config->isMappedLike(getQuickSystemSelectLeftButton(), input))
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
@@ -135,7 +138,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 				ViewController::get()->goToPrevGameList();
 				return true;
 			}
-		}else if (config->isMappedTo("x", input))
+		}
+		else if (config->isMappedTo("x", input))
 		{
 			if (mRoot->getSystem()->isGameSystem())
 			{
@@ -147,7 +151,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 				}
 				return true;
 			}
-		}else if (config->isMappedTo("y", input) && !UIModeController::getInstance()->isUIModeKid())
+		}
+		else if (config->isMappedTo("y", input))
 		{
 			if(mRoot->getSystem()->isGameSystem())
 			{
