@@ -4,7 +4,6 @@
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMsgBox.h"
 #include "utils/FileSystemUtil.h"
-#include "utils/ProfilingUtil.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "EmulationStation.h"
@@ -360,8 +359,6 @@ int main(int argc, char* argv[])
 #endif
 
 	processQuitMode();
-
-	ProfileDump();
 
 	LOG(LogInfo) << "EmulationStation cleanly shutting down.";
 
