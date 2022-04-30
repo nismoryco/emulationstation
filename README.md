@@ -9,7 +9,7 @@ Building
 
 **Building on Linux**
 
-EmulationStation uses some C++11 code, which means you'll need to use at least g++-4.7 on Linux, or VS2010 on Windows, to compile.
+EmulationStation uses some C++11 code, which means you'll need to use at least g++-4.7 on Linux to compile.
 
 EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, FreeImage and FreeType.  You also should probably install the `fonts-droid` package which contains fallback fonts for Chinese/Japanese/Korean characters, but ES will still work fine without it (this package is only used at run-time).
 
@@ -29,27 +29,29 @@ sudo dnf install SDL2-devel freeimage-devel freetype-devel \
 **Note**: this repository uses a git submodule - to checkout the source and all submodules, use
 
 ```bash
-git clone --recursive https://github.com/RetroPie/EmulationStation.git
+git clone --recursive https://github.com/nismoryco/emulationstation.git
 ```
 
 or 
 
 ```bash
-git clone https://github.com/RetroPie/EmulationStation.git
-cd EmulationStation
+git clone https://github.com/nismoryco/emulationstation.git
+cd emulationstation
 git submodule update --init
 ```
 
 Then, generate and build the Makefile with CMake:
 ```bash
-cd YourEmulationStationDirectory
-cmake .
+cd emulationstation
+mkdir build
+cd build
+cmake ..
 make
 ```
 
 NOTE: to generate a `Debug` build on Unix/Linux, run the Makefile generation step as:
 ```bash
-cmake -DCMAKE_BUILD_TYPE=Debug .
+cmake -DCMAKE_BUILD_TYPE=Debug ..
 ```
 
 **On the Raspberry Pi**  
@@ -59,32 +61,15 @@ cmake -DCMAKE_BUILD_TYPE=Debug .
    * if the Pi system uses the legacy/Broadcom driver, install the `libraspberry-dev` package before running `cmake` to configure the build
    * if the Pi system uses the Mesa VC3/V3D GL driver, build using `-DUSE_MESA_GLES=On` to choose the MESA GLES implementation. This option is _mandatory_ when compiling for a Pi4 system, since the legacy GL drivers are not supported anymore on this system.
 
-* Support for using `omxplayer` to play video previews in the gamelist is enabled by adding `-DRPI=On` to the build options
-
 **GLES build notes**
 
  If your system doesn't have a working GLESv2 implementation, the GLESv1 legacy renderer can be compiled in by adding `-DUSE_GLES1=On` to the build options.
-
-**Building on Windows**
-
-[FreeImage](http://downloads.sourceforge.net/freeimage/FreeImage3154Win32.zip)
-
-[FreeType2](http://download.savannah.gnu.org/releases/freetype/freetype-2.4.9.tar.bz2) (you'll need to compile)
-
-[SDL2](http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip)
-
-(Remember to copy necessary .DLLs into the same folder as the executable: probably FreeImage.dll, freetype6.dll, SDL2.dll, and zlib1.dll. Exact list depends on if you built your libraries in "static" mode or not.)
-
-[CMake](http://www.cmake.org/cmake/resources/software.html) (this is used for generating the Visual Studio project)
-
-(If you don't know how to use CMake, here are some hints: run cmake-gui and point it at your EmulationStation folder.  Point the "build" directory somewhere - I use EmulationStation/build.  Click configure, choose "Visual Studio [year] Project", fill in red fields as they appear and keep clicking Configure (you may need to check "Advanced"), then click Generate.)
-
 
 Configuring
 ===========
 
 **~/.emulationstation/es_systems.cfg:**
-When first run, an example systems configuration file will be created at `~/.emulationstation/es_systems.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows.  This example has some comments explaining how to write the configuration file. See the "Writing an es_systems.cfg" section for more information.
+When first run, an example systems configuration file will be created at `~/.emulationstation/es_systems.cfg`.  `~` is `$HOME` on Linux.  This example has some comments explaining how to write the configuration file. See the "Writing an es_systems.cfg" section for more information.
 
 **Keep in mind you'll have to set up your emulator separately from EmulationStation!**
 
