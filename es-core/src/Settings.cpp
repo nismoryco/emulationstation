@@ -193,8 +193,6 @@ void Settings::loadFile()
 		setFloat(node.attribute("name").as_string(), node.attribute("value").as_float());
 	for(pugi::xml_node node = doc.child("string"); node; node = node.next_sibling("string"))
 		setString(node.attribute("name").as_string(), node.attribute("value").as_string());
-
-	processBackwardCompatibility();
 }
 
 template<typename Map>
@@ -206,24 +204,6 @@ void Settings::renameSetting(Map& map, std::string&& oldName, std::string&& newN
 		map.erase(it);
 	}
 }
-
-void Settings::processBackwardCompatibility()
-{
-	{	// SaveGamelistsOnExit -> SaveGamelistsMode
-		std::map<std::string, bool>::const_iterator it = mBoolMap.find("SaveGamelistsOnExit");
-		if (it != mBoolMap.end()) {
-			mStringMap["SaveGamelistsMode"] = it->second ? "on exit" : "never";
-			mBoolMap.erase(it);
-		}
-	}
-
-	{ // ScreenSaverSlideShow Image -> Media
-		renameSetting<std::map<std::string, int>>(mIntMap, std::string("ScreenSaverSwapImageTimeout"), std::string("ScreenSaverSwapMediaTimeout"));
-		renameSetting<std::map<std::string, bool>>(mBoolMap, std::string("SlideshowScreenSaverCustomImageSource"), std::string("SlideshowScreenSaverCustomMediaSource"));
-		renameSetting<std::map<std::string, std::string>>(mStringMap, std::string("SlideshowScreenSaverImageDir"), std::string("SlideshowScreenSaverMediaDir"));
-	}
-}
-
 
 //Print a warning message if the setting we're trying to get doesn't already exist in the map, then return the value in the map.
 #define SETTINGS_GETSET(type, mapName, getMethodName, setMethodName) type Settings::getMethodName(const std::string& name) \

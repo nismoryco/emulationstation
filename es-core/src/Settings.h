@@ -32,7 +32,6 @@ private:
 	Settings();
 
 	void setDefaults();		//Clear everything and load default values.
-	void processBackwardCompatibility();
 	template<typename Map>
 	void renameSetting(Map& map, std::string&& oldName, std::string&& newName);
 
