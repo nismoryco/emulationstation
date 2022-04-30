@@ -86,8 +86,7 @@ void Settings::setDefaults()
 	mBoolMap["DebugImage"] = false;
 
 	mIntMap["ScreenSaverTime"] = 5 * Settings::ONE_MINUTE_IN_MS;
-	mIntMap["SystemSleepTime"] = 0 * Settings::ONE_MINUTE_IN_MS;
-	mBoolMap["SystemSleepTimeHintDisplayed"] = false;
+
 	#ifdef _RPI_
 		mIntMap["MaxVRAM"] = 80;
 	#else

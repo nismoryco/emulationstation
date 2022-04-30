@@ -10,7 +10,7 @@
 #include <iomanip>
 
 Window::Window() : mNormalizeNextUpdate(false), mFrameTimeElapsed(0), mFrameCountElapsed(0), mAverageDeltaTime(10),
-	mAllowSleep(true), mSleeping(false), mTimeSinceLastInput(0), mScreenSaver(NULL), mRenderScreenSaver(false), mInfoPopup(NULL)
+	mTimeSinceLastInput(0), mScreenSaver(NULL), mRenderScreenSaver(false), mInfoPopup(NULL)
 {
 	mHelp = new HelpComponent(this);
 	mBackgroundOverlay = new ImageComponent(this);
@@ -118,14 +118,6 @@ void Window::input(InputConfig* config, Input input)
 	if (mScreenSaver && mScreenSaver->isScreenSaverActive() && Settings::getInstance()->getBool("ScreenSaverControls")
 		&& inputDuringScreensaver(config, input))
 	{
-		return;
-	}
-
-	if (mSleeping)
-	{
-		mSleeping = false;
-		mTimeSinceLastInput = 0;
-		onWake();
 		return;
 	}
 
@@ -248,30 +240,11 @@ void Window::render()
 	{
 		mInfoPopup->render(transform);
 	}
-
-	if(mTimeSinceLastInput >= screensaverTime && screensaverTime != 0)
-	{
-		unsigned int systemSleepTime = (unsigned int)Settings::getInstance()->getInt("SystemSleepTime");
-		if(!isProcessing() && mAllowSleep && systemSleepTime != 0 && mTimeSinceLastInput >= systemSleepTime) {
-			mSleeping = true;
-			onSleep();
-		}
-	}
 }
 
 void Window::normalizeNextUpdate()
 {
 	mNormalizeNextUpdate = true;
-}
-
-bool Window::getAllowSleep()
-{
-	return mAllowSleep;
-}
-
-void Window::setAllowSleep(bool sleep)
-{
-	mAllowSleep = sleep;
 }
 
 void Window::renderLoadingScreen(std::string text, float percent, unsigned char opacity)
@@ -386,26 +359,6 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
 	});
 
 	mHelp->setPrompts(addPrompts);
-}
-
-// TODO - Remove
-void Window::onSleep()
-{
-	if (Settings::getInstance()->getBool("Windowed")) {
-		LOG(LogInfo) << "running windowed. No further onSleep() processing.";
-		return;
-	}
-
-	if (mScreenSaver && mRenderScreenSaver)
-	{
-		mScreenSaver->stopScreenSaver();
-		mRenderScreenSaver = false;
-	}
-}
-
-// TODO - Remove
-void Window::onWake()
-{
 }
 
 bool Window::isProcessing()

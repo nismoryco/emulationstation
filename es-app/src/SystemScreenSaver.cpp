@@ -29,11 +29,6 @@ SystemScreenSaver::~SystemScreenSaver()
 {
 }
 
-bool SystemScreenSaver::allowSleep()
-{
-	return true;
-}
-
 bool SystemScreenSaver::isScreenSaverActive()
 {
 	return (mState != STATE_INACTIVE);

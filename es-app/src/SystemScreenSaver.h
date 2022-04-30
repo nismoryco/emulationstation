@@ -15,7 +15,6 @@ public:
 	virtual void startScreenSaver();
 	virtual void stopScreenSaver();
 	virtual void renderScreenSaver();
-	virtual bool allowSleep();
 	virtual void update(int deltaTime);
 	virtual bool isScreenSaverActive();
 
