@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
-option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer) and audio options" ${RPI})
-option(PROFILING "Set to ON to enable profiling" ${PROFILING})
+option(RPI "Set to ON to enable the Raspberry PI audio options" ${RPI})
 
 # GLES implementation overrides
 option(USE_MESA_GLES "Set to ON to select the MESA OpenGL ES driver" ${USE_MESA_GLES})
@@ -101,23 +100,7 @@ if(DEFINED BCMHOST OR RPI)
     add_definitions(-D_RPI_)
 endif()
 
-if(PROFILING)
-    add_definitions(-DUSE_PROFILING)
-endif()
-
 #-------------------------------------------------------------------------------
-
-if(MSVC)
-    set(CMAKE_DEBUG_POSTFIX "d")
-    add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
-    add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
-    add_definitions(-DNOMINMAX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP") #multi-processor compilation
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP") #multi-processor compilation
-
-    # Set the start-up project to in VS to 'emulationstation'
-    set(VS_STARTUP_PROJECT "emulationstation")
-endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     #check for G++ 4.7+
