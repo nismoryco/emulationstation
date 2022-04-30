@@ -117,7 +117,6 @@ void Settings::setDefaults()
 	mStringMap["AudioCard"] = "default";
 	mStringMap["UIMode"] = "Full";
 	mStringMap["UIMode_passkey"] = "uuddlrlrba";
-	mBoolMap["ForceKiosk"] = false;
 	mBoolMap["ForceDisableFilters"] = false;
 
 	mIntMap["WindowWidth"]   = 0;

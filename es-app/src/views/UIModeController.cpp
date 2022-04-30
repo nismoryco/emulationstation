@@ -85,13 +85,7 @@ void UIModeController::unlockUIMode()
 
 bool UIModeController::isUIModeFull()
 {
-	return ((mCurrentUIMode == "Full") && !Settings::getInstance()->getBool("ForceKiosk"));
-}
-
-bool UIModeController::isUIModeKiosk()
-{
-	return (Settings::getInstance()->getBool("ForceKiosk") ||
-		((mCurrentUIMode == "Kiosk")));
+	return (mCurrentUIMode == "Full");
 }
 
 std::string UIModeController::getFormattedPassKeyStr()

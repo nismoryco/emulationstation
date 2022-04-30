@@ -235,14 +235,6 @@ void FileFilterIndex::resetFilters()
 
 void FileFilterIndex::setUIModeFilters()
 {
-	if(!Settings::getInstance()->getBool("ForceDisableFilters")){
-		if (UIModeController::getInstance()->isUIModeKiosk())
-		{
-			filterByHidden = true;
-			std::vector<std::string> val = { "FALSE" };
-			setFilter(HIDDEN_FILTER, &val);
-		}
-	}
 }
 
 void FileFilterIndex::debugPrintIndexes()
