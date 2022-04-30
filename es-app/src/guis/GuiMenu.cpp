@@ -3,13 +3,11 @@
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
-#include "guis/GuiCollectionSystemsOptions.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiGeneralScreensaverOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiSettings.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
 #include "EmulationStation.h"
 #include "SystemData.h"
 #include "VolumeControl.h"
@@ -24,7 +22,6 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 {
 	addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundSettings(); });
 	addEntry("UI SETTINGS", 0x777777FF, true, [this] { openUISettings(); });
-	addEntry("GAME COLLECTION SETTINGS", 0x777777FF, true, [this] { openCollectionSystemSettings(); });
 	addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherSettings(); });
 	addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
 
@@ -201,7 +198,6 @@ void GuiMenu::openUISettings()
 
 			if(needReload)
 			{
-				CollectionSystemManager::get()->updateSystemsList();
 				ViewController::get()->goToStart();
 				ViewController::get()->reloadAll(); // TODO - replace this with some sort of signal-based implementation
 			}
@@ -452,10 +448,6 @@ void GuiMenu::addVersionInfo()
 
 void GuiMenu::openScreensaverOptions() {
 	mWindow->pushGui(new GuiGeneralScreensaverOptions(mWindow, "SCREENSAVER SETTINGS"));
-}
-
-void GuiMenu::openCollectionSystemSettings() {
-	mWindow->pushGui(new GuiCollectionSystemsOptions(mWindow));
 }
 
 void GuiMenu::onSizeChanged()

@@ -11,7 +11,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreenSaver.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.h
 
     # GuiComponents
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.h
@@ -25,7 +24,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.h
 
     # Views
@@ -54,7 +52,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreenSaver.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.cpp
 
     # GuiComponents
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.cpp
@@ -67,7 +64,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.cpp
 
     # Views

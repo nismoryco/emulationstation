@@ -1,7 +1,6 @@
 #include "SystemData.h"
 
 #include "utils/FileSystemUtil.h"
-#include "CollectionSystemManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Gamelist.h"
@@ -311,8 +310,6 @@ bool SystemData::loadConfig(Window* window)
 		systems = new SystemDataPtr[systemCount];
 		for (int i = 0; i < systemCount; i++)
 			systems[i] = nullptr;
-
-		pThreadPool->queueWorkItem([] { CollectionSystemManager::get()->loadCollectionSystems(true); });
 	}
 
 	int processedSystem = 0;
@@ -370,15 +367,11 @@ bool SystemData::loadConfig(Window* window)
 
 		if (window != NULL)
 			window->renderLoadingScreen("Favorites", systemCount == 0 ? 0 : currentSystem / systemCount);
-
-		CollectionSystemManager::get()->updateSystemsList();
 	}
 	else
 	{
 		if (window != NULL)
 			window->renderLoadingScreen("Favorites", systemCount == 0 ? 0 : currentSystem / systemCount);
-
-		CollectionSystemManager::get()->loadCollectionSystems();
 	}
 
 	return true;

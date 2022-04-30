@@ -1,7 +1,6 @@
 #include "views/gamelist/ISimpleGameListView.h"
 
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
@@ -111,10 +110,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}else{
 				onFocusLost();
 				SystemData* systemToView = getCursor()->getSystem();
-				if (systemToView->isCollection())
-				{
-					systemToView = CollectionSystemManager::get()->getSystemToView(systemToView);
-				}
 				ViewController::get()->goToSystemView(systemToView);
 			}
 
@@ -149,17 +144,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 					setCursor(randomGame);
 				}
 				return true;
-			}
-		}
-		else if (config->isMappedTo("y", input))
-		{
-			if(mRoot->getSystem()->isGameSystem())
-			{
-				int presscount = getPressCountInDuration();
-				if (CollectionSystemManager::get()->toggleGameInCollection(getCursor(), presscount))
-				{
-					return true;
-				}
 			}
 		}
 	}

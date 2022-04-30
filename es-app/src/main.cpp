@@ -5,7 +5,6 @@
 #include "guis/GuiMsgBox.h"
 #include "utils/FileSystemUtil.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
 #include "EmulationStation.h"
 #include "InputManager.h"
 #include "Log.h"
@@ -249,7 +248,6 @@ int main(int argc, char* argv[])
 	Window window;
 	SystemScreenSaver screensaver(&window);
 	ViewController::init(&window);
-	CollectionSystemManager::init(&window);
 	MameNames::init();
 	window.pushGui(ViewController::get());
 
@@ -352,7 +350,6 @@ int main(int argc, char* argv[])
 	window.deinit();
 
 	MameNames::deinit();
-	CollectionSystemManager::deinit();
 	SystemData::deleteSystems();
 
 	// call this ONLY when linking with FreeImage as a static library

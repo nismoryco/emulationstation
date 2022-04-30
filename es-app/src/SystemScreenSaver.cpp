@@ -1,6 +1,5 @@
 #include "SystemScreenSaver.h"
 
-#include "CollectionSystemManager.h"
 #include "utils/FileSystemUtil.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"

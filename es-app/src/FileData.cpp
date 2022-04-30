@@ -4,7 +4,6 @@
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "AudioManager.h"
-#include "CollectionSystemManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Log.h"
@@ -91,24 +90,9 @@ const std::string& FileData::getSortName()
 		return metadata.get("sortname");
 }
 
-const std::vector<FileData*>& FileData::getChildrenListToDisplay() {
-
-	FileFilterIndex* idx = CollectionSystemManager::get()->getSystemToView(mSystem)->getIndex();
-	if (idx->isFiltered()) {
-		mFilteredChildren.clear();
-		for(auto it = mChildren.cbegin(); it != mChildren.cend(); it++)
-		{
-			if (idx->showFile((*it))) {
-				mFilteredChildren.push_back(*it);
-			}
-		}
-
-		return mFilteredChildren;
-	}
-	else
-	{
-		return mChildren;
-	}
+const std::vector<FileData*>& FileData::getChildrenListToDisplay()
+{
+	return mChildren;
 }
 
 const std::string FileData::getVideoPath() const
@@ -305,7 +289,6 @@ void FileData::launchGame(Window* window)
 
 	//update last played time
 	gameToUpdate->metadata.set("lastplayed", Utils::Time::DateTime(Utils::Time::now()));
-	CollectionSystemManager::get()->refreshCollectionSystems(gameToUpdate);
 
 	gameToUpdate->mSystem->onMetaDataSavePoint();
 }
