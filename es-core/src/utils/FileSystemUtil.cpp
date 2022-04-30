@@ -108,17 +108,9 @@ namespace Utils
 			if(homePath.length())
 				return homePath;
 
-			// check if "getExePath()/.emulationstation/es_systems.cfg" exists
-			if(Utils::FileSystem::exists(getExePath() + "/.emulationstation/es_systems.cfg"))
-				homePath = getExePath();
-
-			// check for HOME environment variable
-			if(!homePath.length())
-			{
-				const char* envHome = getenv("HOME");
-				if(envHome)
-					homePath = getGenericPath(envHome);
-			}
+			const char* envHome = getenv("HOME");
+			if(envHome)
+				homePath = getGenericPath(envHome);
 
 			// no homepath found, fall back to current working directory
 			if(!homePath.length())
