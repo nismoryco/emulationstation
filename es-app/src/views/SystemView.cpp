@@ -5,7 +5,6 @@
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "Log.h"
-#include "Scripting.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "Window.h"
@@ -196,7 +195,6 @@ bool SystemView::input(InputConfig* config, Input input)
 			config->isMappedLike("up", input) ||
 			config->isMappedLike("down", input))
 			listInput(0);
-		Scripting::fireEvent("system-select", this->IList::getSelected()->getName(), "input");
 		if(!UIModeController::getInstance()->isUIModeKid() && config->isMappedTo("select", input) && Settings::getInstance()->getBool("ScreenSaverControls"))
 		{
 			mWindow->startScreenSaver();

@@ -6,7 +6,6 @@
 #include "resources/TextureResource.h"
 #include "InputManager.h"
 #include "Log.h"
-#include "Scripting.h"
 #include <algorithm>
 #include <iomanip>
 
@@ -389,7 +388,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
 	mHelp->setPrompts(addPrompts);
 }
 
-
+// TODO - Remove
 void Window::onSleep()
 {
 	if (Settings::getInstance()->getBool("Windowed")) {
@@ -397,18 +396,16 @@ void Window::onSleep()
 		return;
 	}
 
-	int gotErrors = Scripting::fireEvent("sleep");
-
-	if (gotErrors == 0 && mScreenSaver && mRenderScreenSaver)
+	if (mScreenSaver && mRenderScreenSaver)
 	{
 		mScreenSaver->stopScreenSaver();
 		mRenderScreenSaver = false;
 	}
 }
 
+// TODO - Remove
 void Window::onWake()
 {
-	Scripting::fireEvent("wake");
 }
 
 bool Window::isProcessing()
@@ -420,7 +417,6 @@ void Window::startScreenSaver()
 {
 	if (mScreenSaver && !mRenderScreenSaver)
 	{
-		Scripting::fireEvent("screensaver-start");
 		// Tell the GUI components the screensaver is starting
 		for(auto i = mGuiStack.cbegin(); i != mGuiStack.cend(); i++)
 			(*i)->onScreenSaverActivate();
@@ -436,7 +432,6 @@ bool Window::cancelScreenSaver()
 	{
 		mScreenSaver->stopScreenSaver();
 		mRenderScreenSaver = false;
-		Scripting::fireEvent("screensaver-stop");
 
 		// Tell the GUI components the screensaver has stopped
 		for(auto i = mGuiStack.cbegin(); i != mGuiStack.cend(); i++)

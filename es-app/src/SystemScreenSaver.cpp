@@ -7,7 +7,6 @@
 #include "FileData.h"
 #include "FileFilterIndex.h"
 #include "Log.h"
-#include "Scripting.h"
 #include "Sound.h"
 #include "SystemData.h"
 #include <algorithm>

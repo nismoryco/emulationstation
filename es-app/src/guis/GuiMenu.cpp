@@ -12,7 +12,6 @@
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "EmulationStation.h"
-#include "Scripting.h"
 #include "SystemData.h"
 #include "VolumeControl.h"
 #include <SDL_events.h>
@@ -239,7 +238,6 @@ void GuiMenu::openUISettings()
 
 			if(needReload)
 			{
-				Scripting::fireEvent("theme-changed", theme_set->getSelected(), oldTheme);
 				CollectionSystemManager::get()->updateSystemsList();
 				ViewController::get()->goToStart();
 				ViewController::get()->reloadAll(); // TODO - replace this with some sort of signal-based implementation
@@ -417,7 +415,6 @@ void GuiMenu::openQuitMenu()
 	if (UIModeController::getInstance()->isUIModeFull())
 	{
 		auto static restart_es_fx = []() {
-			Scripting::fireEvent("quit");
 			if (quitES(QuitMode::RESTART)) {
 				LOG(LogWarning) << "Restart terminated with non-zero result!";
 			}
@@ -436,7 +433,6 @@ void GuiMenu::openQuitMenu()
 		if(Settings::getInstance()->getBool("ShowExit"))
 		{
 			auto static quit_es_fx = [] {
-				Scripting::fireEvent("quit");
 				quitES();
 			};
 
@@ -454,8 +450,6 @@ void GuiMenu::openQuitMenu()
 	}
 
 	auto static reboot_sys_fx = [] {
-		Scripting::fireEvent("quit", "reboot");
-		Scripting::fireEvent("reboot");
 		if (quitES(QuitMode::REBOOT)) {
 			LOG(LogWarning) << "Restart terminated with non-zero result!";
 		}
@@ -473,8 +467,6 @@ void GuiMenu::openQuitMenu()
 	s->addRow(row);
 
 	auto static shutdown_sys_fx = [] {
-		Scripting::fireEvent("quit", "shutdown");
-		Scripting::fireEvent("shutdown");
 		if (quitES(QuitMode::SHUTDOWN)) {
 			LOG(LogWarning) << "Shutdown terminated with non-zero result!";
 		}

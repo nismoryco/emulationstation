@@ -85,7 +85,6 @@ set(CORE_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/MameNames.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/platform.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/Scripting.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/Settings.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/Sound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/ThemeData.cpp
