@@ -5,10 +5,6 @@
 #include "utils/StringUtil.h"
 #include "Log.h"
 
-#ifdef WIN32
-#include <Windows.h>
-#endif
-
 FT_Library Font::sLibrary = NULL;
 
 int Font::getSize() const { return mSize; }
@@ -227,39 +223,6 @@ void Font::getTextureForNewGlyph(const Vector2i& glyphSize, FontTexture*& tex_ou
 
 std::vector<std::string> getFallbackFontPaths()
 {
-#ifdef WIN32
-	// Windows
-
-	// get this system's equivalent of "C:\Windows" (might be on a different drive or in a different folder)
-	// so we can check the Fonts subdirectory for fallback fonts
-	TCHAR winDir[MAX_PATH];
-	GetWindowsDirectory(winDir, MAX_PATH);
-	std::string fontDir = winDir;
-	fontDir += "\\Fonts\\";
-
-	const char* fontNames[] = {
-		"meiryo.ttc", // japanese
-		"simhei.ttf", // chinese
-		"arial.ttf"   // latin
-	};
-
-	//prepend to font file names
-	std::vector<std::string> fontPaths;
-	fontPaths.reserve(sizeof(fontNames) / sizeof(fontNames[0]));
-
-	for(unsigned int i = 0; i < sizeof(fontNames) / sizeof(fontNames[0]); i++)
-	{
-		std::string path = fontDir + fontNames[i];
-		if(ResourceManager::getInstance()->fileExists(path))
-			fontPaths.push_back(path);
-	}
-
-	fontPaths.shrink_to_fit();
-	return fontPaths;
-
-#else
-	// Linux
-
 	const char* paths[] = {
 		"/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
 		"/usr/share/fonts/truetype/freefont/FreeMono.ttf",
@@ -275,8 +238,6 @@ std::vector<std::string> getFallbackFontPaths()
 
 	fontPaths.shrink_to_fit();
 	return fontPaths;
-
-#endif
 }
 
 FT_Face Font::getFaceForChar(unsigned int id)

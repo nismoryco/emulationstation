@@ -18,7 +18,6 @@ namespace Utils
 		std::string getCWDPath         ();
 		void        setExePath         (const std::string& _path);
 		std::string getExePath         ();
-		std::string getPreferredPath   (const std::string& _path);
 		std::string getGenericPath     (const std::string& _path);
 		std::string getEscapedPath     (const std::string& _path);
 		std::string getCanonicalPath   (const std::string& _path);
@@ -39,9 +38,7 @@ namespace Utils
 		bool        isDirectory        (const std::string& _path);
 		bool        isSymlink          (const std::string& _path);
 		bool        isHidden           (const std::string& _path);
-#if !defined(_WIN32)
 		bool        isExecutable       (const std::string& _path);
-#endif // !_WIN32
 
 	} // FileSystem::
 

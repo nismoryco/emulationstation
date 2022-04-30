@@ -4,11 +4,6 @@
 
 #include <string>
 
-//why the hell this naming inconsistency exists is well beyond me
-#ifdef WIN32
-	#define sleep Sleep
-#endif
-
 enum QuitMode
 {
 	QUIT = 0,

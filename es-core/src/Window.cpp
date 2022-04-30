@@ -10,10 +10,6 @@
 #include <algorithm>
 #include <iomanip>
 
-#ifdef WIN32
-#include <SDL_events.h>
-#endif
-
 Window::Window() : mNormalizeNextUpdate(false), mFrameTimeElapsed(0), mFrameCountElapsed(0), mAverageDeltaTime(10),
 	mAllowSleep(true), mSleeping(false), mTimeSinceLastInput(0), mScreenSaver(NULL), mRenderScreenSaver(false), mInfoPopup(NULL)
 {
@@ -316,12 +312,6 @@ void Window::renderLoadingScreen(std::string text, float percent, unsigned char 
 	delete cache;
 
 	Renderer::swapBuffers();
-
-#ifdef WIN32
-	// Avoid Window Freezing on Windows
-	SDL_Event event;
-	while (SDL_PollEvent(&event));
-#endif
 }
 
 void Window::renderHelpPromptsEarly()

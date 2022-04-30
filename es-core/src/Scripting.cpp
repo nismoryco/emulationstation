@@ -2,10 +2,8 @@
 #include "Log.h"
 #include "platform.h"
 #include "utils/FileSystemUtil.h"
-#ifndef WIN32
 #include <errno.h>
 #include <string.h>
-#endif
 
 namespace Scripting
 {
@@ -30,12 +28,10 @@ namespace Scripting
         for(std::list<std::string>::const_iterator dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); ++dirIt) {
             std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
             for (std::list<std::string>::const_iterator it = scripts.cbegin(); it != scripts.cend(); ++it) {
-#ifndef WIN32 // osx / linux
                 if (!Utils::FileSystem::isExecutable(*it)) {
                     LOG(LogWarning) << *it << " is not executable. Review file permissions.";
                     continue;
                 }
-#endif
                 std::string script = *it;
                 if (arg1.length() > 0) {
                     script += " \"" + arg1 + "\"";
@@ -53,12 +49,10 @@ namespace Scripting
                 ret = runSystemCommand(script);
                 if (ret != 0) {
                     LOG(LogWarning) << script << " failed with exit code != 0. Terminating processing for this event.";
-#ifndef WIN32
                     if (ENOENT == errno) {
                         LOG(LogWarning) << "Exit code: " << errno << " (" << strerror(errno) << ")";
                         LOG(LogWarning) << "It is not executable by the current user (usually 'pi'). Review file permissions.";
                     }
-#endif
                     return ret;
                 }
             }

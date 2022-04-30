@@ -8,13 +8,7 @@
 
 #include <algorithm>
 
-#if defined(_WIN32)
-// because windows...
-#include <Windows.h>
-#define snprintf _snprintf
-#else // _WIN32
 #include <sys/time.h>
-#endif // !_WIN32
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -31,28 +25,16 @@ namespace Utils
 
 		static double getFrequency( void )
 		{
-#if defined(_WIN32)
-			uint64_t qpFrequency;
-			QueryPerformanceFrequency((LARGE_INTEGER*)&qpFrequency);
-			return 1.0 / qpFrequency;
-#else // _WIN32
 			return 1.0 / 1000000.0;
-#endif // _WIN32
 		} // getFrequency
 
 //////////////////////////////////////////////////////////////////////////
 
 	static uint64_t getCounter( void )
 	{
-#if defined(_WIN32)
-			uint64_t qpCounter;
-			QueryPerformanceCounter((LARGE_INTEGER*)&qpCounter);
-			return qpCounter;
-#else // _WIN32
 			timeval tv;
 			gettimeofday(&tv, nullptr);
 			return static_cast<uint64_t>(tv.tv_sec) * 1000000u + static_cast<uint64_t>(tv.tv_usec);
-#endif // !_WIN32
 	} // getCounter
 
 //////////////////////////////////////////////////////////////////////////

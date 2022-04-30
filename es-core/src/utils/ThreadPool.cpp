@@ -1,9 +1,5 @@
 #include "ThreadPool.h"
 
-#if WIN32
-#include <Windows.h>
-#endif
-
 namespace Utils
 {
 	ThreadPool::ThreadPool() : mRunning(true), mWaiting(false), mNumWork(0)
@@ -12,11 +8,6 @@ namespace Utils
 
 		auto doWork = [&](size_t id)
 		{
-#if WIN32
-			auto mask = (static_cast<DWORD_PTR>(1) << id);
-			SetThreadAffinityMask(GetCurrentThread(), mask);
-#endif
-
 			while (mRunning)
 			{
 				_mutex.lock();
