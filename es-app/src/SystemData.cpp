@@ -22,7 +22,7 @@ std::ranlux48 SystemData::sURNG = std::ranlux48(std::random_device()());
 
 
 SystemData::SystemData(const std::string& name, const std::string& fullName, SystemEnvironmentData* envData, const std::string& themeFolder, bool CollectionSystem) :
-	mName(name), mFullName(fullName), mEnvData(envData), mThemeFolder(themeFolder), mIsCollectionSystem(CollectionSystem), mIsGameSystem(true)
+	mName(name), mFullName(fullName), mEnvData(envData), mThemeFolder(themeFolder), mIsGameSystem(true)
 {
 	mFilterIndex = new FileFilterIndex();
 
@@ -364,14 +364,6 @@ bool SystemData::loadConfig(Window* window)
 
 		delete[] systems;
 		delete pThreadPool;
-
-		if (window != NULL)
-			window->renderLoadingScreen("Favorites", systemCount == 0 ? 0 : currentSystem / systemCount);
-	}
-	else
-	{
-		if (window != NULL)
-			window->renderLoadingScreen("Favorites", systemCount == 0 ? 0 : currentSystem / systemCount);
 	}
 
 	return true;
@@ -443,9 +435,7 @@ std::string SystemData::getConfigPath(bool forWrite)
 
 bool SystemData::isVisible()
 {
-   return (getDisplayedGameCount() > 0 ||
-           mIsCollectionSystem ||
-           (mIsCollectionSystem && mName == "favorites"));
+   return (getDisplayedGameCount() > 0);
 }
 
 SystemData* SystemData::getNext() const
@@ -588,7 +578,7 @@ void SystemData::loadTheme()
 }
 
 void SystemData::writeMetaData() {
-	if(Settings::getInstance()->getBool("IgnoreGamelist") || mIsCollectionSystem)
+	if(Settings::getInstance()->getBool("IgnoreGamelist"))
 		return;
 
 	//save changed game data back to xml

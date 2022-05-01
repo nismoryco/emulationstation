@@ -60,7 +60,6 @@ public:
 
 	inline std::vector<SystemData*>::const_iterator getIterator() const { return std::find(sSystemVector.cbegin(), sSystemVector.cend(), this); };
 	inline std::vector<SystemData*>::const_reverse_iterator getRevIterator() const { return std::find(sSystemVector.crbegin(), sSystemVector.crend(), this); };
-	inline bool isCollection() { return mIsCollectionSystem; };
 	inline bool isGameSystem() { return mIsGameSystem; };
 
 	bool isVisible();
@@ -80,7 +79,6 @@ public:
 private:
 	static SystemData* loadSystem(pugi::xml_node system);
 
-	bool mIsCollectionSystem;
 	bool mIsGameSystem;
 	std::string mName;
 	std::string mFullName;
