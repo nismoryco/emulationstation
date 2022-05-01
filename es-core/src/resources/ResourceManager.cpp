@@ -32,8 +32,8 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
 		if(Utils::FileSystem::exists(test))
 			return test;
 
-		// check in exepath
-		test = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
+		// check in /usr/share/emulationstation/resources/
+		test = std::string("/usr/share/emulationstation/resources/") + &path[2];
 		if(Utils::FileSystem::exists(test))
 			return test;
 
