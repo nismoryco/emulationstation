@@ -50,7 +50,7 @@ void SystemScreenSaver::renderScreenSaver()
 	{
 		std::string screensaver_behavior = Settings::getInstance()->getString("ScreenSaverBehavior");
 		Renderer::setMatrix(Transform4x4f::Identity());
-		unsigned int color = (int)((screensaver_behavior == "dim" ? 0x000000A0 : 0x000000FF)*mOpacity);
+		unsigned int color = (int)((screensaver_behavior == "dim" ? 0x000000C0 : 0x000000FF)*mOpacity);  //0x000000A0
 		Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(), color, color);
 	}
 }
