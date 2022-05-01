@@ -226,7 +226,7 @@ int main(int argc, char* argv[])
 	std::locale::global(std::locale("C"));
 
 	if(!parseArgs(argc, argv))
-		return 0;
+		return QuitMode::SHELL;
 
 	// call this ONLY when linking with FreeImage as a static library
 #ifdef FREEIMAGE_LIB
@@ -235,7 +235,7 @@ int main(int argc, char* argv[])
 
 	//if ~/.emulationstation doesn't exist and cannot be created, bail
 	if(!verifyHomeFolderExists())
-		return 1;
+		return QuitMode::SHELL;
 
 	//start the logger
 	Log::init();
@@ -257,7 +257,7 @@ int main(int argc, char* argv[])
 	if(!window.init())
 	{
 		LOG(LogError) << "Window failed to initialize!";
-		return 1;
+		return QuitMode::SHELL;
 	}
 
 	if (splashScreen)
@@ -276,7 +276,7 @@ int main(int argc, char* argv[])
 		{
 			LOG(LogError) << "Unknown error occured while parsing system config file.";
 			Renderer::deinit();
-			return 1;
+			return QuitMode::SHELL;
 		}
 
 		// we can't handle es_systems.cfg file problems inside ES itself, so display the error message then quit
