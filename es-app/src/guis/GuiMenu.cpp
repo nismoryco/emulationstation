@@ -381,23 +381,22 @@ void GuiMenu::openQuitMenu()
 	row.addElement(std::make_shared<TextComponent>(window, "RESTART EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	s->addRow(row);
 
-	if(Settings::getInstance()->getBool("ShowExit"))
-	{
-		auto static quit_es_fx = [] {
-			quitES();
-		};
-
-		row.elements.clear();
-		if (confirm_quit) {
-			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES", quit_es_fx, "NO", nullptr));
-			});
-		} else {
-			row.makeAcceptInputHandler(quit_es_fx);
+	auto static shutdown_sys_fx = [] {
+		if (quitES(QuitMode::SHUTDOWN)) {
+			LOG(LogWarning) << "Shutdown terminated with non-zero result!";
 		}
-		row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-		s->addRow(row);
+	};
+
+	row.elements.clear();
+	if (confirm_quit) {
+		row.makeAcceptInputHandler([window] {
+			window->pushGui(new GuiMsgBox(window, "REALLY SHUTDOWN?", "YES", shutdown_sys_fx, "NO", nullptr));
+		});
+	} else {
+		row.makeAcceptInputHandler(shutdown_sys_fx);
 	}
+	row.addElement(std::make_shared<TextComponent>(window, "SHUTDOWN SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	s->addRow(row);
 
 	auto static reboot_sys_fx = [] {
 		if (quitES(QuitMode::REBOOT)) {
@@ -416,22 +415,23 @@ void GuiMenu::openQuitMenu()
 	row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	s->addRow(row);
 
-	auto static shutdown_sys_fx = [] {
-		if (quitES(QuitMode::SHUTDOWN)) {
-			LOG(LogWarning) << "Shutdown terminated with non-zero result!";
-		}
-	};
+	if(Settings::getInstance()->getBool("ShowExit"))
+	{
+		auto static quit_es_fx = [] {
+			quitES(QuitMode::SHELL);
+		};
 
-	row.elements.clear();
-	if (confirm_quit) {
-		row.makeAcceptInputHandler([window] {
-			window->pushGui(new GuiMsgBox(window, "REALLY SHUTDOWN?", "YES", shutdown_sys_fx, "NO", nullptr));
-		});
-	} else {
-		row.makeAcceptInputHandler(shutdown_sys_fx);
+		row.elements.clear();
+		if (confirm_quit) {
+			row.makeAcceptInputHandler([window] {
+				window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES", quit_es_fx, "NO", nullptr));
+			});
+		} else {
+			row.makeAcceptInputHandler(quit_es_fx);
+		}
+		row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		s->addRow(row);
 	}
-	row.addElement(std::make_shared<TextComponent>(window, "SHUTDOWN SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-	s->addRow(row);
 	mWindow->pushGui(s);
 }
 

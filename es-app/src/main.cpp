@@ -143,7 +143,7 @@ bool parseArgs(int argc, char* argv[])
 			std::cout <<
 				"EmulationStation, a graphical front-end for ROM browsing.\n"
 				"Written by Alec \"Aloshi\" Lofquist.\n"
-				"Version " << PROGRAM_VERSION_STRING << ", built " << PROGRAM_BUILT_STRING << "\n\n"
+				"Version " << PROGRAM_VERSION_STRING << " built " << PROGRAM_BUILT_STRING << "\n\n"
 				"Command line arguments:\n"
 				"--resolution [width] [height]  try and force a particular resolution\n"
 				"--screenrotate [n]             rotate a quarter turn clockwise for each n\n"
@@ -357,9 +357,9 @@ int main(int argc, char* argv[])
 	FreeImage_DeInitialise();
 #endif
 
-	processQuitMode();
+	int retcode = processQuitMode();
 
 	LOG(LogInfo) << "EmulationStation cleanly shutting down.";
 
-	return 0;
+	return retcode;
 }

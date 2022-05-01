@@ -6,22 +6,12 @@
 
 #include "Log.h"
 
-int runShutdownCommand()
-{
-	return system("sudo shutdown -h now");
-}
-
-int runRestartCommand()
-{
-	return system("sudo shutdown -r now");
-}
-
 int runSystemCommand(const std::string& cmd_utf8)
 {
 	return system(cmd_utf8.c_str());
 }
 
-QuitMode quitMode = QuitMode::QUIT;
+QuitMode quitMode = QuitMode::RESTART;
 
 int quitES(QuitMode mode)
 {
@@ -40,23 +30,22 @@ void touch(const std::string& filename)
 		close(fd);
 }
 
-void processQuitMode()
+int processQuitMode()
 {
 	switch (quitMode)
 	{
 	case QuitMode::RESTART:
 		LOG(LogInfo) << "Restarting EmulationStation";
-		touch("/tmp/es-restart");
-		break;
-	case QuitMode::REBOOT:
-		LOG(LogInfo) << "Rebooting system";
-		touch("/tmp/es-sysrestart");
-		runRestartCommand();
 		break;
 	case QuitMode::SHUTDOWN:
 		LOG(LogInfo) << "Shutting system down";
-		touch("/tmp/es-shutdown");
-		runShutdownCommand();
+		break;
+	case QuitMode::REBOOT:
+		LOG(LogInfo) << "Rebooting system";
+		break;
+	case QuitMode::SHELL:
+		LOG(LogInfo) << "Quitting to root shell";
 		break;
 	}
+	return quitMode;
 }
