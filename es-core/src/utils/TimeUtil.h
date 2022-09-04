@@ -2,6 +2,7 @@
 #ifndef ES_CORE_UTILS_TIME_UTIL_H
 #define ES_CORE_UTILS_TIME_UTIL_H
 
+#include <time.h>
 #include <string>
 
 namespace Utils
