@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export HOME=/root
 
@@ -18,8 +18,8 @@ case "$RET" in
 		DEPTH1=8
 		DEPTH2=16
 	fi
-	/usr/sbin/fbset -depth $DEPTH1 > /dev/null 2>&1
-	/usr/sbin/fbset -depth $DEPTH2 > /dev/null 2>&1
+	/usr/sbin/fbset -depth $DEPTH1 >/dev/null 2>&1
+	/usr/sbin/fbset -depth $DEPTH2 >/dev/null 2>&1
 	/usr/bin/sleep 2
 	;;
   1)
@@ -33,7 +33,7 @@ case "$RET" in
 	export PS1='\u@\h:\w# '
 	cd $HOME
 	echo
-	exec /bin/sh --login
+	exec /bin/bash --login
 	;;
 esac
 
